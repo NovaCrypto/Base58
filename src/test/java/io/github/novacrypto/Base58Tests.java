@@ -43,6 +43,11 @@ public final class Base58Tests {
     }
 
     @Test
+    public void zeroSecond() {
+        assertBase58("5R", new byte[]{1, 0});
+    }
+
+    @Test
     public void twoFiveFiveByteArrayLength1() {
         assertBase58("5Q", new byte[]{(byte) 255});
     }

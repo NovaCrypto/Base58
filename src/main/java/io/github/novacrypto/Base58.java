@@ -158,7 +158,7 @@ public final class Base58 {
      */
     public byte[] decode(final CharSequence base58) {
         final ByteArrayTarget target = new ByteArrayTarget();
-        getBytes(base58, target);
+        decode(base58, target);
         return target.bytes;
     }
 
@@ -173,8 +173,7 @@ public final class Base58 {
         }
     }
 
-    private void getBytes(final CharSequence base58, final DecodeTarget target) {
-        final char[] a = ALPHABET;
+    private void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
         final byte[] d = getBufferOfAtLeastBytes(strLen);
         int dlen = -1;

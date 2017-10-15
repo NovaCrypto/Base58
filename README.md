@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/NovaCrypto/Base58.svg?branch=master)](https://travis-ci.org/NovaCrypto/Base58) [![codecov](https://codecov.io/gh/NovaCrypto/Base58/branch/master/graph/badge.svg)](https://codecov.io/gh/NovaCrypto/Base58)

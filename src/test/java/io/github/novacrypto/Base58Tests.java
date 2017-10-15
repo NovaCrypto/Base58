@@ -73,11 +73,11 @@ public final class Base58Tests {
         assertEquals(expected, base58Static(bytes));
     }
 
-    private static String base58Instance(byte[] bytes) {
+    public static String base58Instance(byte[] bytes) {
         return new Base58().encode(bytes);
     }
 
-    private static String base58Static(byte[] bytes) {
+    public static String base58Static(byte[] bytes) {
         return Base58.encodeStatic(bytes).toString();
     }
 }

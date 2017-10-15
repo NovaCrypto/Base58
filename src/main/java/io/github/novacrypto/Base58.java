@@ -26,10 +26,21 @@ import java.util.Arrays;
 /**
  * Class for encoding byte arrays to base58.
  * Suitable for small data arrays as the algorithm is O(n^2).
+ * Don't share instances across threads.
+ * Static methods are threadsafe however.
  */
 public final class Base58 {
 
+    public static final class BadCharacterException extends RuntimeException {
+
+        BadCharacterException(char charAtI) {
+            super("Bad character in base58 string, '" + charAtI + "'");
+        }
+    }
+
     private static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
+    private static final int[] lookup = populateLookUp(ALPHABET);
+
     private byte[] bytes;
 
     private static final ThreadLocal<Base58> working = new ThreadLocal<>();
@@ -78,6 +89,7 @@ public final class Base58 {
     }
 
     public interface Target {
+
         void append(char x);
     }
 
@@ -146,9 +158,12 @@ public final class Base58 {
         int j = 0;
         for (int i = 0; i < strLen; i++) {
             j = 0;
-            int c = indexOf(a, base58.charAt(i));
-            if (c < 0)
-                throw new RuntimeException();
+            final char charAtI = base58.charAt(i);
+            int c = valueOf(charAtI);
+            if (c < 0) {
+                Arrays.fill(d, (byte) 255);
+                throw new BadCharacterException(charAtI);
+            }
             if (c == 0 && blanks == i) {
                 blanks++;
             }
@@ -175,10 +190,17 @@ public final class Base58 {
         return bytes;
     }
 
-    private int indexOf(char[] a, char c) {
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] == c) return i;
-        }
-        return -1;
+    private static int[] populateLookUp(char[] alphabet) {
+        final int[] lookup = new int['z' + 1];
+        Arrays.fill(lookup, -1);
+        for (int i = 0; i < alphabet.length; i++)
+            lookup[alphabet[i]] = i;
+        return lookup;
+    }
+
+    private static int valueOf(final char base58Char) {
+        if (base58Char >= lookup.length)
+            return -1;
+        return lookup[base58Char];
     }
 }

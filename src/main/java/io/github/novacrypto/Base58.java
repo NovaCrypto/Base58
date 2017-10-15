@@ -88,9 +88,16 @@ public final class Base58 {
         return sb.toString();
     }
 
-    public interface Target {
+    public interface EncodeTarget {
+        void append(char c);
+    }
 
-        void append(char x);
+    public interface DecodeWriter {
+        void append(byte b);
+    }
+
+    public interface DecodeTarget {
+        DecodeWriter getWriterForLength(int len);
     }
 
     private byte[] getBufferOfAtLeastBytes(final int atLeast) {
@@ -109,7 +116,7 @@ public final class Base58 {
      * @param bytes  bytes to encode
      * @param target where to write resulting string to
      */
-    public void encode(final byte[] bytes, final Target target) {
+    public void encode(final byte[] bytes, final EncodeTarget target) {
         final char[] a = ALPHABET;
         final int bLen = bytes.length;
         final byte[] d = getBufferOfAtLeastBytes(bLen << 1);
@@ -150,6 +157,23 @@ public final class Base58 {
      * @return number as bytes
      */
     public byte[] decode(final CharSequence base58) {
+        final ByteArrayTarget target = new ByteArrayTarget();
+        getBytes(base58, target);
+        return target.bytes;
+    }
+
+    private static class ByteArrayTarget implements DecodeTarget {
+        private int idx = 0;
+        byte[] bytes;
+
+        @Override
+        public DecodeWriter getWriterForLength(int len) {
+            bytes = new byte[len];
+            return b -> bytes[idx++] = b;
+        }
+    }
+
+    private void getBytes(final CharSequence base58, final DecodeTarget target) {
         final char[] a = ALPHABET;
         final int strLen = base58.length();
         final byte[] d = getBufferOfAtLeastBytes(strLen);
@@ -181,13 +205,16 @@ public final class Base58 {
                 j++;
             }
         }
-        final byte[] bytes = new byte[j + blanks];
-        final int end = j + blanks - 1;
-        for (int i = blanks; i < bytes.length; i++) {
-            bytes[i] = d[end - i];
+        final int outputLength = j + blanks;
+        final DecodeWriter writer = target.getWriterForLength(outputLength);
+        for (int i = 0; i < blanks; i++) {
+            writer.append((byte) 0);
+        }
+        final int end = outputLength - 1;
+        for (int i = blanks; i < outputLength; i++) {
+            writer.append(d[end - i]);
         }
         Arrays.fill(d, (byte) 255);
-        return bytes;
     }
 
     private static int[] populateLookUp(char[] alphabet) {

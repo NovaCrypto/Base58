@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public final class Base58Tests {
+public final class Base58EncodeTests {
 
     @Test
     public void emptyByteArray() {
@@ -69,15 +69,15 @@ public final class Base58Tests {
     }
 
     private void assertBase58(String expected, byte[] bytes) {
-        assertEquals(expected, base58Instance(bytes));
-        assertEquals(expected, base58Static(bytes));
+        assertEquals(expected, base58InstanceEncode(bytes));
+        assertEquals(expected, base58StaticEncode(bytes));
     }
 
-    public static String base58Instance(byte[] bytes) {
+    static String base58InstanceEncode(byte[] bytes) {
         return new Base58().encode(bytes);
     }
 
-    public static String base58Static(byte[] bytes) {
+    static String base58StaticEncode(byte[] bytes) {
         return Base58.encodeStatic(bytes).toString();
     }
 }

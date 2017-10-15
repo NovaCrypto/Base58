@@ -26,10 +26,21 @@ import java.util.Arrays;
 /**
  * Class for encoding byte arrays to base58.
  * Suitable for small data arrays as the algorithm is O(n^2).
+ * Don't share instances across threads.
+ * Static methods are threadsafe however.
  */
 public final class Base58 {
 
-    public static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
+    public static final class BadCharacterException extends RuntimeException {
+
+        BadCharacterException(char charAtI) {
+            super("Bad character in base58 string, '" + charAtI + "'");
+        }
+    }
+
+    private static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
+    private static final int[] lookup = populateLookUp(ALPHABET);
+
     private byte[] bytes;
 
     private static final ThreadLocal<Base58> working = new ThreadLocal<>();
@@ -37,11 +48,23 @@ public final class Base58 {
     /**
      * Encodes given bytes as a number in base58.
      * Threadsafe, uses an instance per thread.
+     *
      * @param bytes bytes to encode
      * @return base58 string representation
      */
     public static CharSequence encodeStatic(byte[] bytes) {
         return getThreadSharedBase58().encode(bytes);
+    }
+
+    /**
+     * Decodes given bytes as a number in base58.
+     * Threadsafe, uses an instance per thread.
+     *
+     * @param base58 string to decode
+     * @return number as bytes
+     */
+    public static byte[] decodeStatic(final CharSequence base58) {
+        return getThreadSharedBase58().decode(base58);
     }
 
     private static Base58 getThreadSharedBase58() {
@@ -55,6 +78,7 @@ public final class Base58 {
 
     /**
      * Encodes given bytes as a number in base58.
+     *
      * @param bytes bytes to encode
      * @return base58 string representation
      */
@@ -65,6 +89,7 @@ public final class Base58 {
     }
 
     public interface Target {
+
         void append(char x);
     }
 
@@ -80,11 +105,12 @@ public final class Base58 {
 
     /**
      * Encodes given bytes as a number in base58.
-     * @param bytes bytes to encode
+     *
+     * @param bytes  bytes to encode
      * @param target where to write resulting string to
      */
     public void encode(final byte[] bytes, final Target target) {
-        final char[] A = ALPHABET;
+        final char[] a = ALPHABET;
         final int bLen = bytes.length;
         final byte[] d = getBufferOfAtLeastBytes(bLen << 1);
         int dlen = -1;
@@ -93,7 +119,7 @@ public final class Base58 {
         for (int i = 0; i < bLen; i++) {
             int c = bytes[i] & 0xff;
             if (c == 0 && blanks == i) {
-                target.append(A[0]);
+                target.append(a[0]);
                 blanks++;
             }
             j = 0;
@@ -112,8 +138,69 @@ public final class Base58 {
             }
         }
         while (j-- > 0) {
-            target.append(A[d[j]]);
+            target.append(a[d[j]]);
         }
         Arrays.fill(d, (byte) 255);
+    }
+
+    /**
+     * Decodes given bytes as a number in base58.
+     *
+     * @param base58 string to decode
+     * @return number as bytes
+     */
+    public byte[] decode(final CharSequence base58) {
+        final char[] a = ALPHABET;
+        final int strLen = base58.length();
+        final byte[] d = getBufferOfAtLeastBytes(strLen);
+        int dlen = -1;
+        int blanks = 0;
+        int j = 0;
+        for (int i = 0; i < strLen; i++) {
+            j = 0;
+            final char charAtI = base58.charAt(i);
+            int c = valueOf(charAtI);
+            if (c < 0) {
+                Arrays.fill(d, (byte) 255);
+                throw new BadCharacterException(charAtI);
+            }
+            if (c == 0 && blanks == i) {
+                blanks++;
+            }
+            while (j <= dlen || c != 0) {
+                int n;
+                if (j > dlen) {
+                    dlen = j;
+                    n = c;
+                } else {
+                    n = d[j] & 0xff;
+                    n = n * 58 + c;
+                }
+                d[j] = (byte) n;
+                c = n >>> 8;
+                j++;
+            }
+        }
+        final byte[] bytes = new byte[j + blanks];
+        final int end = j + blanks - 1;
+        for (int i = blanks; i < bytes.length; i++) {
+            bytes[i] = d[end - i];
+        }
+        Arrays.fill(d, (byte) 255);
+        return bytes;
+    }
+
+    private static int[] populateLookUp(char[] alphabet) {
+        final int[] lookup = new int['z' + 1];
+        Arrays.fill(lookup, -1);
+        for (int i = 0; i < alphabet.length; i++)
+            lookup[alphabet[i]] = i;
+        return lookup;
+    }
+
+    private static int valueOf(final char base58Char) {
+        if (base58Char >= lookup.length)
+            return -1;
+        return lookup[base58Char];
     }
 }

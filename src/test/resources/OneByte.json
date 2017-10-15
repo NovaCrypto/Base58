@@ -1,0 +1,1028 @@
+{
+  "vectors": [
+    {
+      "dataHex": "00",
+      "dataBase58": "1"
+    },
+    {
+      "dataHex": "01",
+      "dataBase58": "2"
+    },
+    {
+      "dataHex": "02",
+      "dataBase58": "3"
+    },
+    {
+      "dataHex": "03",
+      "dataBase58": "4"
+    },
+    {
+      "dataHex": "04",
+      "dataBase58": "5"
+    },
+    {
+      "dataHex": "05",
+      "dataBase58": "6"
+    },
+    {
+      "dataHex": "06",
+      "dataBase58": "7"
+    },
+    {
+      "dataHex": "07",
+      "dataBase58": "8"
+    },
+    {
+      "dataHex": "08",
+      "dataBase58": "9"
+    },
+    {
+      "dataHex": "09",
+      "dataBase58": "A"
+    },
+    {
+      "dataHex": "0a",
+      "dataBase58": "B"
+    },
+    {
+      "dataHex": "0b",
+      "dataBase58": "C"
+    },
+    {
+      "dataHex": "0c",
+      "dataBase58": "D"
+    },
+    {
+      "dataHex": "0d",
+      "dataBase58": "E"
+    },
+    {
+      "dataHex": "0e",
+      "dataBase58": "F"
+    },
+    {
+      "dataHex": "0f",
+      "dataBase58": "G"
+    },
+    {
+      "dataHex": "10",
+      "dataBase58": "H"
+    },
+    {
+      "dataHex": "11",
+      "dataBase58": "J"
+    },
+    {
+      "dataHex": "12",
+      "dataBase58": "K"
+    },
+    {
+      "dataHex": "13",
+      "dataBase58": "L"
+    },
+    {
+      "dataHex": "14",
+      "dataBase58": "M"
+    },
+    {
+      "dataHex": "15",
+      "dataBase58": "N"
+    },
+    {
+      "dataHex": "16",
+      "dataBase58": "P"
+    },
+    {
+      "dataHex": "17",
+      "dataBase58": "Q"
+    },
+    {
+      "dataHex": "18",
+      "dataBase58": "R"
+    },
+    {
+      "dataHex": "19",
+      "dataBase58": "S"
+    },
+    {
+      "dataHex": "1a",
+      "dataBase58": "T"
+    },
+    {
+      "dataHex": "1b",
+      "dataBase58": "U"
+    },
+    {
+      "dataHex": "1c",
+      "dataBase58": "V"
+    },
+    {
+      "dataHex": "1d",
+      "dataBase58": "W"
+    },
+    {
+      "dataHex": "1e",
+      "dataBase58": "X"
+    },
+    {
+      "dataHex": "1f",
+      "dataBase58": "Y"
+    },
+    {
+      "dataHex": "20",
+      "dataBase58": "Z"
+    },
+    {
+      "dataHex": "21",
+      "dataBase58": "a"
+    },
+    {
+      "dataHex": "22",
+      "dataBase58": "b"
+    },
+    {
+      "dataHex": "23",
+      "dataBase58": "c"
+    },
+    {
+      "dataHex": "24",
+      "dataBase58": "d"
+    },
+    {
+      "dataHex": "25",
+      "dataBase58": "e"
+    },
+    {
+      "dataHex": "26",
+      "dataBase58": "f"
+    },
+    {
+      "dataHex": "27",
+      "dataBase58": "g"
+    },
+    {
+      "dataHex": "28",
+      "dataBase58": "h"
+    },
+    {
+      "dataHex": "29",
+      "dataBase58": "i"
+    },
+    {
+      "dataHex": "2a",
+      "dataBase58": "j"
+    },
+    {
+      "dataHex": "2b",
+      "dataBase58": "k"
+    },
+    {
+      "dataHex": "2c",
+      "dataBase58": "m"
+    },
+    {
+      "dataHex": "2d",
+      "dataBase58": "n"
+    },
+    {
+      "dataHex": "2e",
+      "dataBase58": "o"
+    },
+    {
+      "dataHex": "2f",
+      "dataBase58": "p"
+    },
+    {
+      "dataHex": "30",
+      "dataBase58": "q"
+    },
+    {
+      "dataHex": "31",
+      "dataBase58": "r"
+    },
+    {
+      "dataHex": "32",
+      "dataBase58": "s"
+    },
+    {
+      "dataHex": "33",
+      "dataBase58": "t"
+    },
+    {
+      "dataHex": "34",
+      "dataBase58": "u"
+    },
+    {
+      "dataHex": "35",
+      "dataBase58": "v"
+    },
+    {
+      "dataHex": "36",
+      "dataBase58": "w"
+    },
+    {
+      "dataHex": "37",
+      "dataBase58": "x"
+    },
+    {
+      "dataHex": "38",
+      "dataBase58": "y"
+    },
+    {
+      "dataHex": "39",
+      "dataBase58": "z"
+    },
+    {
+      "dataHex": "3a",
+      "dataBase58": "21"
+    },
+    {
+      "dataHex": "3b",
+      "dataBase58": "22"
+    },
+    {
+      "dataHex": "3c",
+      "dataBase58": "23"
+    },
+    {
+      "dataHex": "3d",
+      "dataBase58": "24"
+    },
+    {
+      "dataHex": "3e",
+      "dataBase58": "25"
+    },
+    {
+      "dataHex": "3f",
+      "dataBase58": "26"
+    },
+    {
+      "dataHex": "40",
+      "dataBase58": "27"
+    },
+    {
+      "dataHex": "41",
+      "dataBase58": "28"
+    },
+    {
+      "dataHex": "42",
+      "dataBase58": "29"
+    },
+    {
+      "dataHex": "43",
+      "dataBase58": "2A"
+    },
+    {
+      "dataHex": "44",
+      "dataBase58": "2B"
+    },
+    {
+      "dataHex": "45",
+      "dataBase58": "2C"
+    },
+    {
+      "dataHex": "46",
+      "dataBase58": "2D"
+    },
+    {
+      "dataHex": "47",
+      "dataBase58": "2E"
+    },
+    {
+      "dataHex": "48",
+      "dataBase58": "2F"
+    },
+    {
+      "dataHex": "49",
+      "dataBase58": "2G"
+    },
+    {
+      "dataHex": "4a",
+      "dataBase58": "2H"
+    },
+    {
+      "dataHex": "4b",
+      "dataBase58": "2J"
+    },
+    {
+      "dataHex": "4c",
+      "dataBase58": "2K"
+    },
+    {
+      "dataHex": "4d",
+      "dataBase58": "2L"
+    },
+    {
+      "dataHex": "4e",
+      "dataBase58": "2M"
+    },
+    {
+      "dataHex": "4f",
+      "dataBase58": "2N"
+    },
+    {
+      "dataHex": "50",
+      "dataBase58": "2P"
+    },
+    {
+      "dataHex": "51",
+      "dataBase58": "2Q"
+    },
+    {
+      "dataHex": "52",
+      "dataBase58": "2R"
+    },
+    {
+      "dataHex": "53",
+      "dataBase58": "2S"
+    },
+    {
+      "dataHex": "54",
+      "dataBase58": "2T"
+    },
+    {
+      "dataHex": "55",
+      "dataBase58": "2U"
+    },
+    {
+      "dataHex": "56",
+      "dataBase58": "2V"
+    },
+    {
+      "dataHex": "57",
+      "dataBase58": "2W"
+    },
+    {
+      "dataHex": "58",
+      "dataBase58": "2X"
+    },
+    {
+      "dataHex": "59",
+      "dataBase58": "2Y"
+    },
+    {
+      "dataHex": "5a",
+      "dataBase58": "2Z"
+    },
+    {
+      "dataHex": "5b",
+      "dataBase58": "2a"
+    },
+    {
+      "dataHex": "5c",
+      "dataBase58": "2b"
+    },
+    {
+      "dataHex": "5d",
+      "dataBase58": "2c"
+    },
+    {
+      "dataHex": "5e",
+      "dataBase58": "2d"
+    },
+    {
+      "dataHex": "5f",
+      "dataBase58": "2e"
+    },
+    {
+      "dataHex": "60",
+      "dataBase58": "2f"
+    },
+    {
+      "dataHex": "61",
+      "dataBase58": "2g"
+    },
+    {
+      "dataHex": "62",
+      "dataBase58": "2h"
+    },
+    {
+      "dataHex": "63",
+      "dataBase58": "2i"
+    },
+    {
+      "dataHex": "64",
+      "dataBase58": "2j"
+    },
+    {
+      "dataHex": "65",
+      "dataBase58": "2k"
+    },
+    {
+      "dataHex": "66",
+      "dataBase58": "2m"
+    },
+    {
+      "dataHex": "67",
+      "dataBase58": "2n"
+    },
+    {
+      "dataHex": "68",
+      "dataBase58": "2o"
+    },
+    {
+      "dataHex": "69",
+      "dataBase58": "2p"
+    },
+    {
+      "dataHex": "6a",
+      "dataBase58": "2q"
+    },
+    {
+      "dataHex": "6b",
+      "dataBase58": "2r"
+    },
+    {
+      "dataHex": "6c",
+      "dataBase58": "2s"
+    },
+    {
+      "dataHex": "6d",
+      "dataBase58": "2t"
+    },
+    {
+      "dataHex": "6e",
+      "dataBase58": "2u"
+    },
+    {
+      "dataHex": "6f",
+      "dataBase58": "2v"
+    },
+    {
+      "dataHex": "70",
+      "dataBase58": "2w"
+    },
+    {
+      "dataHex": "71",
+      "dataBase58": "2x"
+    },
+    {
+      "dataHex": "72",
+      "dataBase58": "2y"
+    },
+    {
+      "dataHex": "73",
+      "dataBase58": "2z"
+    },
+    {
+      "dataHex": "74",
+      "dataBase58": "31"
+    },
+    {
+      "dataHex": "75",
+      "dataBase58": "32"
+    },
+    {
+      "dataHex": "76",
+      "dataBase58": "33"
+    },
+    {
+      "dataHex": "77",
+      "dataBase58": "34"
+    },
+    {
+      "dataHex": "78",
+      "dataBase58": "35"
+    },
+    {
+      "dataHex": "79",
+      "dataBase58": "36"
+    },
+    {
+      "dataHex": "7a",
+      "dataBase58": "37"
+    },
+    {
+      "dataHex": "7b",
+      "dataBase58": "38"
+    },
+    {
+      "dataHex": "7c",
+      "dataBase58": "39"
+    },
+    {
+      "dataHex": "7d",
+      "dataBase58": "3A"
+    },
+    {
+      "dataHex": "7e",
+      "dataBase58": "3B"
+    },
+    {
+      "dataHex": "7f",
+      "dataBase58": "3C"
+    },
+    {
+      "dataHex": "80",
+      "dataBase58": "3D"
+    },
+    {
+      "dataHex": "81",
+      "dataBase58": "3E"
+    },
+    {
+      "dataHex": "82",
+      "dataBase58": "3F"
+    },
+    {
+      "dataHex": "83",
+      "dataBase58": "3G"
+    },
+    {
+      "dataHex": "84",
+      "dataBase58": "3H"
+    },
+    {
+      "dataHex": "85",
+      "dataBase58": "3J"
+    },
+    {
+      "dataHex": "86",
+      "dataBase58": "3K"
+    },
+    {
+      "dataHex": "87",
+      "dataBase58": "3L"
+    },
+    {
+      "dataHex": "88",
+      "dataBase58": "3M"
+    },
+    {
+      "dataHex": "89",
+      "dataBase58": "3N"
+    },
+    {
+      "dataHex": "8a",
+      "dataBase58": "3P"
+    },
+    {
+      "dataHex": "8b",
+      "dataBase58": "3Q"
+    },
+    {
+      "dataHex": "8c",
+      "dataBase58": "3R"
+    },
+    {
+      "dataHex": "8d",
+      "dataBase58": "3S"
+    },
+    {
+      "dataHex": "8e",
+      "dataBase58": "3T"
+    },
+    {
+      "dataHex": "8f",
+      "dataBase58": "3U"
+    },
+    {
+      "dataHex": "90",
+      "dataBase58": "3V"
+    },
+    {
+      "dataHex": "91",
+      "dataBase58": "3W"
+    },
+    {
+      "dataHex": "92",
+      "dataBase58": "3X"
+    },
+    {
+      "dataHex": "93",
+      "dataBase58": "3Y"
+    },
+    {
+      "dataHex": "94",
+      "dataBase58": "3Z"
+    },
+    {
+      "dataHex": "95",
+      "dataBase58": "3a"
+    },
+    {
+      "dataHex": "96",
+      "dataBase58": "3b"
+    },
+    {
+      "dataHex": "97",
+      "dataBase58": "3c"
+    },
+    {
+      "dataHex": "98",
+      "dataBase58": "3d"
+    },
+    {
+      "dataHex": "99",
+      "dataBase58": "3e"
+    },
+    {
+      "dataHex": "9a",
+      "dataBase58": "3f"
+    },
+    {
+      "dataHex": "9b",
+      "dataBase58": "3g"
+    },
+    {
+      "dataHex": "9c",
+      "dataBase58": "3h"
+    },
+    {
+      "dataHex": "9d",
+      "dataBase58": "3i"
+    },
+    {
+      "dataHex": "9e",
+      "dataBase58": "3j"
+    },
+    {
+      "dataHex": "9f",
+      "dataBase58": "3k"
+    },
+    {
+      "dataHex": "a0",
+      "dataBase58": "3m"
+    },
+    {
+      "dataHex": "a1",
+      "dataBase58": "3n"
+    },
+    {
+      "dataHex": "a2",
+      "dataBase58": "3o"
+    },
+    {
+      "dataHex": "a3",
+      "dataBase58": "3p"
+    },
+    {
+      "dataHex": "a4",
+      "dataBase58": "3q"
+    },
+    {
+      "dataHex": "a5",
+      "dataBase58": "3r"
+    },
+    {
+      "dataHex": "a6",
+      "dataBase58": "3s"
+    },
+    {
+      "dataHex": "a7",
+      "dataBase58": "3t"
+    },
+    {
+      "dataHex": "a8",
+      "dataBase58": "3u"
+    },
+    {
+      "dataHex": "a9",
+      "dataBase58": "3v"
+    },
+    {
+      "dataHex": "aa",
+      "dataBase58": "3w"
+    },
+    {
+      "dataHex": "ab",
+      "dataBase58": "3x"
+    },
+    {
+      "dataHex": "ac",
+      "dataBase58": "3y"
+    },
+    {
+      "dataHex": "ad",
+      "dataBase58": "3z"
+    },
+    {
+      "dataHex": "ae",
+      "dataBase58": "41"
+    },
+    {
+      "dataHex": "af",
+      "dataBase58": "42"
+    },
+    {
+      "dataHex": "b0",
+      "dataBase58": "43"
+    },
+    {
+      "dataHex": "b1",
+      "dataBase58": "44"
+    },
+    {
+      "dataHex": "b2",
+      "dataBase58": "45"
+    },
+    {
+      "dataHex": "b3",
+      "dataBase58": "46"
+    },
+    {
+      "dataHex": "b4",
+      "dataBase58": "47"
+    },
+    {
+      "dataHex": "b5",
+      "dataBase58": "48"
+    },
+    {
+      "dataHex": "b6",
+      "dataBase58": "49"
+    },
+    {
+      "dataHex": "b7",
+      "dataBase58": "4A"
+    },
+    {
+      "dataHex": "b8",
+      "dataBase58": "4B"
+    },
+    {
+      "dataHex": "b9",
+      "dataBase58": "4C"
+    },
+    {
+      "dataHex": "ba",
+      "dataBase58": "4D"
+    },
+    {
+      "dataHex": "bb",
+      "dataBase58": "4E"
+    },
+    {
+      "dataHex": "bc",
+      "dataBase58": "4F"
+    },
+    {
+      "dataHex": "bd",
+      "dataBase58": "4G"
+    },
+    {
+      "dataHex": "be",
+      "dataBase58": "4H"
+    },
+    {
+      "dataHex": "bf",
+      "dataBase58": "4J"
+    },
+    {
+      "dataHex": "c0",
+      "dataBase58": "4K"
+    },
+    {
+      "dataHex": "c1",
+      "dataBase58": "4L"
+    },
+    {
+      "dataHex": "c2",
+      "dataBase58": "4M"
+    },
+    {
+      "dataHex": "c3",
+      "dataBase58": "4N"
+    },
+    {
+      "dataHex": "c4",
+      "dataBase58": "4P"
+    },
+    {
+      "dataHex": "c5",
+      "dataBase58": "4Q"
+    },
+    {
+      "dataHex": "c6",
+      "dataBase58": "4R"
+    },
+    {
+      "dataHex": "c7",
+      "dataBase58": "4S"
+    },
+    {
+      "dataHex": "c8",
+      "dataBase58": "4T"
+    },
+    {
+      "dataHex": "c9",
+      "dataBase58": "4U"
+    },
+    {
+      "dataHex": "ca",
+      "dataBase58": "4V"
+    },
+    {
+      "dataHex": "cb",
+      "dataBase58": "4W"
+    },
+    {
+      "dataHex": "cc",
+      "dataBase58": "4X"
+    },
+    {
+      "dataHex": "cd",
+      "dataBase58": "4Y"
+    },
+    {
+      "dataHex": "ce",
+      "dataBase58": "4Z"
+    },
+    {
+      "dataHex": "cf",
+      "dataBase58": "4a"
+    },
+    {
+      "dataHex": "d0",
+      "dataBase58": "4b"
+    },
+    {
+      "dataHex": "d1",
+      "dataBase58": "4c"
+    },
+    {
+      "dataHex": "d2",
+      "dataBase58": "4d"
+    },
+    {
+      "dataHex": "d3",
+      "dataBase58": "4e"
+    },
+    {
+      "dataHex": "d4",
+      "dataBase58": "4f"
+    },
+    {
+      "dataHex": "d5",
+      "dataBase58": "4g"
+    },
+    {
+      "dataHex": "d6",
+      "dataBase58": "4h"
+    },
+    {
+      "dataHex": "d7",
+      "dataBase58": "4i"
+    },
+    {
+      "dataHex": "d8",
+      "dataBase58": "4j"
+    },
+    {
+      "dataHex": "d9",
+      "dataBase58": "4k"
+    },
+    {
+      "dataHex": "da",
+      "dataBase58": "4m"
+    },
+    {
+      "dataHex": "db",
+      "dataBase58": "4n"
+    },
+    {
+      "dataHex": "dc",
+      "dataBase58": "4o"
+    },
+    {
+      "dataHex": "dd",
+      "dataBase58": "4p"
+    },
+    {
+      "dataHex": "de",
+      "dataBase58": "4q"
+    },
+    {
+      "dataHex": "df",
+      "dataBase58": "4r"
+    },
+    {
+      "dataHex": "e0",
+      "dataBase58": "4s"
+    },
+    {
+      "dataHex": "e1",
+      "dataBase58": "4t"
+    },
+    {
+      "dataHex": "e2",
+      "dataBase58": "4u"
+    },
+    {
+      "dataHex": "e3",
+      "dataBase58": "4v"
+    },
+    {
+      "dataHex": "e4",
+      "dataBase58": "4w"
+    },
+    {
+      "dataHex": "e5",
+      "dataBase58": "4x"
+    },
+    {
+      "dataHex": "e6",
+      "dataBase58": "4y"
+    },
+    {
+      "dataHex": "e7",
+      "dataBase58": "4z"
+    },
+    {
+      "dataHex": "e8",
+      "dataBase58": "51"
+    },
+    {
+      "dataHex": "e9",
+      "dataBase58": "52"
+    },
+    {
+      "dataHex": "ea",
+      "dataBase58": "53"
+    },
+    {
+      "dataHex": "eb",
+      "dataBase58": "54"
+    },
+    {
+      "dataHex": "ec",
+      "dataBase58": "55"
+    },
+    {
+      "dataHex": "ed",
+      "dataBase58": "56"
+    },
+    {
+      "dataHex": "ee",
+      "dataBase58": "57"
+    },
+    {
+      "dataHex": "ef",
+      "dataBase58": "58"
+    },
+    {
+      "dataHex": "f0",
+      "dataBase58": "59"
+    },
+    {
+      "dataHex": "f1",
+      "dataBase58": "5A"
+    },
+    {
+      "dataHex": "f2",
+      "dataBase58": "5B"
+    },
+    {
+      "dataHex": "f3",
+      "dataBase58": "5C"
+    },
+    {
+      "dataHex": "f4",
+      "dataBase58": "5D"
+    },
+    {
+      "dataHex": "f5",
+      "dataBase58": "5E"
+    },
+    {
+      "dataHex": "f6",
+      "dataBase58": "5F"
+    },
+    {
+      "dataHex": "f7",
+      "dataBase58": "5G"
+    },
+    {
+      "dataHex": "f8",
+      "dataBase58": "5H"
+    },
+    {
+      "dataHex": "f9",
+      "dataBase58": "5J"
+    },
+    {
+      "dataHex": "fa",
+      "dataBase58": "5K"
+    },
+    {
+      "dataHex": "fb",
+      "dataBase58": "5L"
+    },
+    {
+      "dataHex": "fc",
+      "dataBase58": "5M"
+    },
+    {
+      "dataHex": "fd",
+      "dataBase58": "5N"
+    },
+    {
+      "dataHex": "fe",
+      "dataBase58": "5P"
+    },
+    {
+      "dataHex": "ff",
+      "dataBase58": "5Q"
+    }
+  ]
+}

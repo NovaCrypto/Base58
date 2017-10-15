@@ -73,6 +73,6 @@ public final class Base58Tests {
     }
 
     private static String base58Static(byte[] bytes) {
-        return Base58.encodeStatic(bytes);
+        return Base58.encodeStatic(bytes).toString();
     }
 }

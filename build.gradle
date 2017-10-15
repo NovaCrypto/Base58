@@ -50,9 +50,9 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: Javadoc) {
+task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
-    from Javadoc.destinationDir
+    from javadoc.destinationDir
 }
 
 artifacts {
@@ -67,13 +67,13 @@ publishing {
             groupId group
             artifactId 'Base58'
             version project.version
-            Artifact("$buildDir/libs/base58-${project.version}-sources.jar"){
+            artifact("$buildDir/libs/base58-${project.version}-sources.jar"){
                 classifier = 'sources'
             }
-            Artifact("$buildDir/libs/base58-${project.version}-javadoc.jar"){
+            artifact("$buildDir/libs/base58-${project.version}-javadoc.jar"){
                 classifier = 'javadoc'
             }
-            Artifact("$buildDir/libs/base58-${project.version}.jar")
+            artifact("$buildDir/libs/base58-${project.version}.jar")
         }
     }
 }

@@ -23,15 +23,25 @@ package io.github.novacrypto;
 
 import java.util.Arrays;
 
+/**
+ * Class for encoding byte arrays to base58.
+ * Suitable for small data arrays as the algorithm is O(n^2).
+ */
 public final class Base58 {
 
     public static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
     private byte[] bytes;
 
-    private static final ThreadLocal<Base58> working = new ThreadLocal<Base58>();
+    private static final ThreadLocal<Base58> working = new ThreadLocal<>();
 
-    public static String encodeStatic(byte[] B) {
-        return getThreadSharedBase58().encode(B);
+    /**
+     * Encodes given bytes as a number in base58.
+     * Threadsafe, uses an instance per thread.
+     * @param bytes bytes to encode
+     * @return base58 string representation
+     */
+    public static CharSequence encodeStatic(byte[] bytes) {
+        return getThreadSharedBase58().encode(bytes);
     }
 
     private static Base58 getThreadSharedBase58() {
@@ -43,13 +53,14 @@ public final class Base58 {
         return base58;
     }
 
-    public String encode(byte[] B) {
+    /**
+     * Encodes given bytes as a number in base58.
+     * @param bytes bytes to encode
+     * @return base58 string representation
+     */
+    public String encode(byte[] bytes) {
         final StringBuilder sb = new StringBuilder();
-        encode(B, new Target() {
-            public void append(char c) {
-                sb.append(c);
-            }
-        });
+        encode(bytes, sb::append);
         return sb.toString();
     }
 
@@ -57,7 +68,7 @@ public final class Base58 {
         void append(char x);
     }
 
-    private byte[] getBufferOfAtLeastBytes(int atLeast) {
+    private byte[] getBufferOfAtLeastBytes(final int atLeast) {
         if (bytes == null || bytes.length < atLeast) {
             if (bytes != null)
                 Arrays.fill(bytes, (byte) 255);
@@ -67,15 +78,20 @@ public final class Base58 {
         return bytes;
     }
 
-    public void encode(byte[] B, Target target) {
+    /**
+     * Encodes given bytes as a number in base58.
+     * @param bytes bytes to encode
+     * @param target where to write resulting string to
+     */
+    public void encode(final byte[] bytes, final Target target) {
         final char[] A = ALPHABET;
-        final int bLen = B.length;
+        final int bLen = bytes.length;
         final byte[] d = getBufferOfAtLeastBytes(bLen << 1);
         int dlen = -1;
         int blanks = 0;
         int j = 0;
         for (int i = 0; i < bLen; i++) {
-            int c = B[i] & 0xff;
+            int c = bytes[i] & 0xff;
             if (c == 0 && blanks == i) {
                 target.append(A[0]);
                 blanks++;

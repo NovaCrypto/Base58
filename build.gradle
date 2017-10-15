@@ -86,7 +86,7 @@ bintray {
     key = project.ext.properties.key
     publications = ['MyPublication']
     pkg {
-        repo = 'General'
+        repo = 'BIP'
         name = 'Base58'
         userOrg = 'novacrypto'
         licenses = ['GPL-3.0']

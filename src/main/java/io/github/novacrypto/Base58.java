@@ -41,7 +41,15 @@ public final class Base58 {
     private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
     private static final int[] VALUES = initValues(DIGITS);
 
-    private byte[] bytes;
+    private final ByteBuffer byteBuffer;
+
+    public Base58(ByteBuffer byteBuffer) {
+        this.byteBuffer = byteBuffer;
+    }
+
+    public Base58() {
+        this(new ByteArrayByteBuffer());
+    }
 
     private static final ThreadLocal<Base58> working = new ThreadLocal<>();
 
@@ -100,14 +108,19 @@ public final class Base58 {
         DecodeWriter getWriterForLength(int len);
     }
 
-    private byte[] getBufferOfAtLeastBytes(final int atLeast) {
-        if (bytes == null || bytes.length < atLeast) {
-            if (bytes != null)
-                Arrays.fill(bytes, (byte) 255);
-            bytes = new byte[atLeast];
-        }
-        Arrays.fill(bytes, (byte) 255);
-        return bytes;
+    public interface ByteBuffer {
+        void grow(int atLeast);
+
+        byte get(int index);
+
+        void put(int index, byte value);
+
+        void clear();
+    }
+
+    private ByteBuffer getBufferOfAtLeastBytes(final int atLeast) {
+        byteBuffer.grow(atLeast);
+        return byteBuffer;
     }
 
     /**
@@ -119,7 +132,7 @@ public final class Base58 {
     public void encode(final byte[] bytes, final EncodeTarget target) {
         final char[] a = DIGITS;
         final int bLen = bytes.length;
-        final byte[] d = getBufferOfAtLeastBytes(bLen << 1);
+        final ByteBuffer d = getBufferOfAtLeastBytes(bLen << 1);
         int dlen = -1;
         int blanks = 0;
         int j = 0;
@@ -136,18 +149,18 @@ public final class Base58 {
                     dlen = j;
                     n = c;
                 } else {
-                    n = d[j];
+                    n = d.get(j);
                     n = (n << 8) + c;
                 }
-                d[j] = (byte) (n % 58);
+                d.put(j, (byte) (n % 58));
                 c = n / 58;
                 j++;
             }
         }
         while (j-- > 0) {
-            target.append(a[d[j]]);
+            target.append(a[d.get(j)]);
         }
-        Arrays.fill(d, (byte) 255);
+        d.clear();
     }
 
     /**
@@ -170,7 +183,7 @@ public final class Base58 {
      */
     public void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
-        final byte[] d = getBufferOfAtLeastBytes(strLen);
+        final ByteBuffer d = getBufferOfAtLeastBytes(strLen);
         int dlen = -1;
         int blanks = 0;
         int j = 0;
@@ -179,7 +192,7 @@ public final class Base58 {
             final char charAtI = base58.charAt(i);
             int c = valueOf(charAtI);
             if (c < 0) {
-                Arrays.fill(d, (byte) 255);
+                d.clear();
                 throw new BadCharacterException(charAtI);
             }
             if (c == 0 && blanks == i) {
@@ -191,10 +204,10 @@ public final class Base58 {
                     dlen = j;
                     n = c;
                 } else {
-                    n = d[j] & 0xff;
+                    n = d.get(j) & 0xff;
                     n = n * 58 + c;
                 }
-                d[j] = (byte) n;
+                d.put(j, (byte) n);
                 c = n >>> 8;
                 j++;
             }
@@ -206,9 +219,9 @@ public final class Base58 {
         }
         final int end = outputLength - 1;
         for (int i = blanks; i < outputLength; i++) {
-            writer.append(d[end - i]);
+            writer.append(d.get(end - i));
         }
-        Arrays.fill(d, (byte) 255);
+        d.clear();
     }
 
     private static int[] initValues(char[] alphabet) {

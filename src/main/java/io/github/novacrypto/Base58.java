@@ -38,8 +38,8 @@ public final class Base58 {
         }
     }
 
-    private static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
-    private static final int[] lookup = populateLookUp(ALPHABET);
+    private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
+    private static final int[] VALUES = initValues(DIGITS);
 
     private byte[] bytes;
 
@@ -117,7 +117,7 @@ public final class Base58 {
      * @param target where to write resulting string to
      */
     public void encode(final byte[] bytes, final EncodeTarget target) {
-        final char[] a = ALPHABET;
+        final char[] a = DIGITS;
         final int bLen = bytes.length;
         final byte[] d = getBufferOfAtLeastBytes(bLen << 1);
         int dlen = -1;
@@ -216,7 +216,7 @@ public final class Base58 {
         Arrays.fill(d, (byte) 255);
     }
 
-    private static int[] populateLookUp(char[] alphabet) {
+    private static int[] initValues(char[] alphabet) {
         final int[] lookup = new int['z' + 1];
         Arrays.fill(lookup, -1);
         for (int i = 0; i < alphabet.length; i++)
@@ -225,8 +225,8 @@ public final class Base58 {
     }
 
     private static int valueOf(final char base58Char) {
-        if (base58Char >= lookup.length)
+        if (base58Char >= VALUES.length)
             return -1;
-        return lookup[base58Char];
+        return VALUES[base58Char];
     }
 }

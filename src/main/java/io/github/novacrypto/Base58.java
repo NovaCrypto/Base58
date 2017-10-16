@@ -162,18 +162,13 @@ public final class Base58 {
         return target.bytes;
     }
 
-    private static class ByteArrayTarget implements DecodeTarget {
-        private int idx = 0;
-        byte[] bytes;
-
-        @Override
-        public DecodeWriter getWriterForLength(int len) {
-            bytes = new byte[len];
-            return b -> bytes[idx++] = b;
-        }
-    }
-
-    private void decode(final CharSequence base58, final DecodeTarget target) {
+    /**
+     * Decodes given bytes as a number in base58.
+     *
+     * @param base58 string to decode
+     * @param target Receiver for output
+     */
+    public void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
         final byte[] d = getBufferOfAtLeastBytes(strLen);
         int dlen = -1;

@@ -113,6 +113,6 @@ public final class Base58DecodeTests {
     }
 
     static byte[] base58StaticDecode(CharSequence base58) {
-        return Base58.decodeStatic(base58);
+        return Base58.base58Decode(base58);
     }
 }

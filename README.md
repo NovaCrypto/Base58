@@ -29,16 +29,16 @@ From simplest to most advanced:
 ## Encode (static method)
 
 ```
-String base58 = Base58.encodeStatic(bytes);
+String base58 = Base58.base58Encode(bytes);
 ```
 
 ## Decode (static method)
 
 ```
-byte[] bytes = Base58.decodeStatic(base58String);
+byte[] bytes = Base58.base58Decode(base58String);
 ```
 
-The static methods are threadsafe and share a buffer per thread.
+The static methods are threadsafe as they have a shared buffer per thread. They are named so they are still readable if you `import static`.
 
 ## Encode (instance method)
 
@@ -58,7 +58,7 @@ The instances are not threadsafe, never share an instance across threads.
 
 ```
 final StringBuilder sb = new StringBuilder();
-encode(bytes, sb::append);
+new Base58().encode(bytes, sb::append);
 return sb.toString();
 ```
 
@@ -77,7 +77,7 @@ static class ByteArrayTarget implements DecodeTarget {
 }
 
 ByteArrayTarget target = new ByteArrayTarget();
-decode(base58, target);
+new Base58().decode(base58, target);
 target.bytes;
 ```
 

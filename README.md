@@ -17,7 +17,7 @@ Add dependency:
 
 ```
 dependencies {
-    compile 'io.github.novacrypto:Base58:0.0.2@jar'
+    compile 'io.github.novacrypto:Base58:0.0.3@jar'
 }
 
 ```

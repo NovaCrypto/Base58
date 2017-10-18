@@ -19,28 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
-import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
-
-final class Resources {
-
-    private Resources() {
-    }
-
-    static <T> T loadJsonResource(String resourceName, Class<T> classOfT) {
-        try {
-            try (final InputStreamReader in = new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName))) {
-                final String json = new BufferedReader(in).lines().collect(Collectors.joining("\n"));
-                return new Gson().fromJson(json, classOfT);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+public interface SecureEncoderDecoder extends SecureEncoder, SecureDecoder{
 }

@@ -19,46 +19,18 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
-import java.util.Arrays;
-
-final class ByteArrayByteBuffer implements Base58.ByteBuffer {
-
-    private static byte[] EMPTY = new byte[0];
-
-    private byte[] bytes = EMPTY;
+final class InsecureStringBufferEncodeTarget implements EncodeTarget {
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
-    public void setCapacity(final int atLeast) {
-        bytes = ensureCapacity(bytes, atLeast);
-        clear(bytes);
+    public void append(char c) {
+        stringBuilder.append(c);
     }
 
     @Override
-    public byte get(final int index) {
-        return bytes[index];
-    }
-
-    @Override
-    public void put(final int index, final byte value) {
-        bytes[index] = value;
-    }
-
-    @Override
-    public void clear() {
-        clear(bytes);
-    }
-
-    private static byte[] ensureCapacity(byte[] bytes, int atLeast) {
-        if (bytes.length >= atLeast) {
-            return bytes;
-        }
-        clear(bytes);
-        return new byte[atLeast];
-    }
-
-    private static void clear(byte[] bytes) {
-        Arrays.fill(bytes, (byte) 255);
+    public String toString() {
+        return stringBuilder.toString();
     }
 }

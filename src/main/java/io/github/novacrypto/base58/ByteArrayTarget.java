@@ -19,9 +19,19 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.json;
+package io.github.novacrypto.base58;
 
-public final class TestVector {
-    public String dataHex;
-    public String dataBase58;
+final class ByteArrayTarget implements DecodeTarget {
+    private int idx = 0;
+    private byte[] bytes;
+
+    @Override
+    public DecodeWriter getWriterForLength(int len) {
+        bytes = new byte[len];
+        return b -> bytes[idx++] = b;
+    }
+
+    byte[] asByteArray() {
+        return bytes;
+    }
 }

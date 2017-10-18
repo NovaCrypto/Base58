@@ -19,7 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 public final class BufferTests {
 
     interface ByteBufferFactory {
-        Base58.ByteBuffer create();
+        ByteBuffer create();
     }
 
     @Parameterized.Parameters
@@ -46,8 +46,7 @@ public final class BufferTests {
         });
     }
 
-    private final Base58.ByteBuffer buffer;
-
+    private final ByteBuffer buffer;
 
     public BufferTests(ByteBufferFactory factory) {
         buffer = factory.create();

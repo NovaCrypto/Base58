@@ -19,12 +19,12 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 
-final class SecureByteBuffer implements Base58.ByteBuffer {
+final class SecureByteBuffer implements io.github.novacrypto.base58.ByteBuffer {
 
     private ByteBuffer bytes;
     private byte[] key = new byte[1021];

@@ -19,107 +19,31 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
-/**
- * Class for encoding byte arrays to base58.
- * Suitable for small data arrays as the algorithm is O(n^2).
- * Don't share instances across threads.
- * Static methods are threadsafe however.
- */
-public final class Base58 {
-
-    public static final class BadCharacterException extends RuntimeException {
-
-        BadCharacterException(char charAtI) {
-            super("Bad character in base58 string, '" + charAtI + "'");
-        }
-    }
+final class Base58EncoderDecoder implements
+        Encoder,
+        Decoder,
+        EncoderDecoder,
+        SecureEncoder,
+        SecureDecoder,
+        SecureEncoderDecoder {
 
     private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
     private static final int[] VALUES = initValues(DIGITS);
 
     private final ByteBuffer byteBuffer;
 
-    public Base58(ByteBuffer byteBuffer) {
+    Base58EncoderDecoder(ByteBuffer byteBuffer) {
         this.byteBuffer = byteBuffer;
     }
 
-    public Base58() {
-        this(new ByteArrayByteBuffer());
-    }
-
-    public static Base58 newSecureInstance() {
-        return new Base58(new SecureByteBuffer());
-    }
-
-    private static final ThreadLocal<Base58> working = new ThreadLocal<>();
-
-    /**
-     * Encodes given bytes as a number in base58.
-     * Threadsafe, uses an instance per thread.
-     *
-     * @param bytes bytes to encode
-     * @return base58 string representation
-     */
-    public static CharSequence base58Encode(byte[] bytes) {
-        return getThreadSharedBase58().encode(bytes);
-    }
-
-    /**
-     * Decodes given bytes as a number in base58.
-     * Threadsafe, uses an instance per thread.
-     *
-     * @param base58 string to decode
-     * @return number as bytes
-     */
-    public static byte[] base58Decode(final CharSequence base58) {
-        return getThreadSharedBase58().decode(base58);
-    }
-
-    private static Base58 getThreadSharedBase58() {
-        Base58 base58 = working.get();
-        if (base58 == null) {
-            base58 = new Base58();
-            working.set(base58);
-        }
-        return base58;
-    }
-
-    /**
-     * Encodes given bytes as a number in base58.
-     *
-     * @param bytes bytes to encode
-     * @return base58 string representation
-     */
     public String encode(byte[] bytes) {
         final StringBuilder sb = new StringBuilder();
         encode(bytes, sb::append);
         return sb.toString();
-    }
-
-    public interface EncodeTarget {
-        void append(char c);
-    }
-
-    public interface DecodeWriter {
-        void append(byte b);
-    }
-
-    public interface DecodeTarget {
-        DecodeWriter getWriterForLength(int len);
-    }
-
-    public interface ByteBuffer {
-        void setCapacity(int atLeast);
-
-        byte get(int index);
-
-        void put(int index, byte value);
-
-        void clear();
     }
 
     private ByteBuffer getBufferOfAtLeastBytes(final int atLeast) {
@@ -167,24 +91,12 @@ public final class Base58 {
         d.clear();
     }
 
-    /**
-     * Decodes given bytes as a number in base58.
-     *
-     * @param base58 string to decode
-     * @return number as bytes
-     */
     public byte[] decode(final CharSequence base58) {
         final ByteArrayTarget target = new ByteArrayTarget();
         decode(base58, target);
-        return target.bytes;
+        return target.asByteArray();
     }
 
-    /**
-     * Decodes given bytes as a number in base58.
-     *
-     * @param base58 string to decode
-     * @param target Receiver for output
-     */
     public void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
         final ByteBuffer d = getBufferOfAtLeastBytes(strLen);

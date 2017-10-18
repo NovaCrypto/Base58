@@ -40,6 +40,7 @@ public final class Base58ResourceTestVectors {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
+                {"LargeCase.json"},
                 {"OneByte.json"},
                 {"Random82Length.json"},
                 {"RandomDecreasingLength.json"},

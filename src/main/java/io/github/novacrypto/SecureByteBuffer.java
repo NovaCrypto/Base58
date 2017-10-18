@@ -42,13 +42,13 @@ final class SecureByteBuffer implements Base58.ByteBuffer {
     @Override
     public byte get(final int index) {
         assertIndexValid(index);
-        return (byte) (bytes.get(index) ^ key[index % 1021]);
+        return encodeDecode(bytes.get(index), index);
     }
 
     @Override
     public void put(final int index, final byte value) {
         assertIndexValid(index);
-        bytes.put(index, (byte) (value ^ key[index % 1021]));
+        bytes.put(index, encodeDecode(value, index));
     }
 
     @Override
@@ -78,7 +78,11 @@ final class SecureByteBuffer implements Base58.ByteBuffer {
         bytes.position(0);
         final int capacity = bytes.capacity();
         for (int i = 0; i < capacity; i++) {
-            bytes.put(i, (byte) (255 ^ key[i % 1021]));
+            bytes.put(i, encodeDecode((byte) 255, i));
         }
+    }
+
+    private byte encodeDecode(byte b, int index) {
+        return (byte) (b ^ key[index % key.length]);
     }
 }

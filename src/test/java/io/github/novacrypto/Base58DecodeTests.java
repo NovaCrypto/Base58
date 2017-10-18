@@ -112,6 +112,10 @@ public final class Base58DecodeTests {
         return new Base58().decode(base58);
     }
 
+    static byte[] base58SecureInstanceDecode(CharSequence base58) {
+        return Base58.newSecureInstance().decode(base58);
+    }
+
     static byte[] base58StaticDecode(CharSequence base58) {
         return Base58.base58Decode(base58);
     }

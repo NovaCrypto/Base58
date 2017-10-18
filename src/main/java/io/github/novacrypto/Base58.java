@@ -51,6 +51,10 @@ public final class Base58 {
         this(new ByteArrayByteBuffer());
     }
 
+    public static Base58 newSecureInstance() {
+        return new Base58(new SecureByteBuffer());
+    }
+
     private static final ThreadLocal<Base58> working = new ThreadLocal<>();
 
     /**
@@ -109,7 +113,7 @@ public final class Base58 {
     }
 
     public interface ByteBuffer {
-        void grow(int atLeast);
+        void setCapacity(int atLeast);
 
         byte get(int index);
 
@@ -119,7 +123,7 @@ public final class Base58 {
     }
 
     private ByteBuffer getBufferOfAtLeastBytes(final int atLeast) {
-        byteBuffer.grow(atLeast);
+        byteBuffer.setCapacity(atLeast);
         return byteBuffer;
     }
 

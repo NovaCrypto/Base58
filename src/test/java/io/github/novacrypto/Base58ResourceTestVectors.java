@@ -30,10 +30,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static io.github.novacrypto.Base58DecodeTests.base58InstanceDecode;
-import static io.github.novacrypto.Base58DecodeTests.base58StaticDecode;
-import static io.github.novacrypto.Base58EncodeTests.base58InstanceEncode;
-import static io.github.novacrypto.Base58EncodeTests.base58StaticEncode;
+import static io.github.novacrypto.Base58DecodeTests.*;
+import static io.github.novacrypto.Base58EncodeTests.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -56,24 +54,27 @@ public final class Base58ResourceTestVectors {
     }
 
     @Test
-    public void encode() {
+    public void encodeStatic() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertEquals(vector.dataBase58, base58InstanceEncode(bytes));
             assertEquals(vector.dataBase58, base58StaticEncode(bytes));
         }
     }
 
     @Test
-    public void encodeParallelInstance() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
+    public void encodeInstance() {
         for (TestVector vector : collection.vectors) {
-            parallelTasks.add(() -> {
-                String actual = base58InstanceEncode(fromHex(vector.dataHex));
-                return () -> assertEquals(vector.dataBase58, actual);
-            });
+            byte[] bytes = fromHex(vector.dataHex);
+            assertEquals(vector.dataBase58, base58InstanceEncode(bytes));
         }
-        parallelTasks.go();
+    }
+
+    @Test
+    public void encodeSecureInstance() {
+        for (TestVector vector : collection.vectors) {
+            byte[] bytes = fromHex(vector.dataHex);
+            assertEquals(vector.dataBase58, base58SecureInstanceEncode(bytes));
+        }
     }
 
     @Test
@@ -89,11 +90,50 @@ public final class Base58ResourceTestVectors {
     }
 
     @Test
-    public void decode() {
+    public void encodeParallelInstance() throws InterruptedException {
+        ParallelTasks parallelTasks = new ParallelTasks();
+        for (TestVector vector : collection.vectors) {
+            parallelTasks.add(() -> {
+                String actual = base58InstanceEncode(fromHex(vector.dataHex));
+                return () -> assertEquals(vector.dataBase58, actual);
+            });
+        }
+        parallelTasks.go();
+    }
+
+    @Test
+    public void encodeParallelSecureInstance() throws InterruptedException {
+        ParallelTasks parallelTasks = new ParallelTasks();
+        for (TestVector vector : collection.vectors) {
+            parallelTasks.add(() -> {
+                String actual = base58SecureInstanceEncode(fromHex(vector.dataHex));
+                return () -> assertEquals(vector.dataBase58, actual);
+            });
+        }
+        parallelTasks.go();
+    }
+
+    @Test
+    public void decodeStatic() {
+        for (TestVector vector : collection.vectors) {
+            byte[] bytes = fromHex(vector.dataHex);
+            assertArrayEquals(bytes, base58StaticDecode(vector.dataBase58));
+        }
+    }
+
+    @Test
+    public void decodeInstance() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
             assertArrayEquals(bytes, base58InstanceDecode(vector.dataBase58));
-            assertArrayEquals(bytes, base58StaticDecode(vector.dataBase58));
+        }
+    }
+
+    @Test
+    public void decodeSecureInstance() {
+        for (TestVector vector : collection.vectors) {
+            byte[] bytes = fromHex(vector.dataHex);
+            assertArrayEquals(bytes, base58SecureInstanceDecode(vector.dataBase58));
         }
     }
 
@@ -117,6 +157,19 @@ public final class Base58ResourceTestVectors {
             parallelTasks.add(() -> {
                 byte[] expected = fromHex(vector.dataHex);
                 byte[] actual = base58StaticDecode(vector.dataBase58);
+                return () -> assertArrayEquals(expected, actual);
+            });
+        }
+        parallelTasks.go();
+    }
+
+    @Test
+    public void decodeParallelSecureInstance() throws InterruptedException {
+        ParallelTasks parallelTasks = new ParallelTasks();
+        for (TestVector vector : collection.vectors) {
+            parallelTasks.add(() -> {
+                byte[] expected = fromHex(vector.dataHex);
+                byte[] actual = base58SecureInstanceDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }

@@ -77,6 +77,10 @@ public final class Base58EncodeTests {
         return new Base58().encode(bytes);
     }
 
+    static String base58SecureInstanceEncode(byte[] bytes) {
+        return Base58.newSecureInstance().encode(bytes);
+    }
+
     static String base58StaticEncode(byte[] bytes) {
         return Base58.base58Encode(bytes).toString();
     }

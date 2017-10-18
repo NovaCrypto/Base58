@@ -23,6 +23,8 @@ package io.github.novacrypto;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
 
 public final class Base58EncodeTests {
@@ -71,10 +73,15 @@ public final class Base58EncodeTests {
     private void assertBase58(String expected, byte[] bytes) {
         assertEquals(expected, base58InstanceEncode(bytes));
         assertEquals(expected, base58StaticEncode(bytes));
+        assertEquals(expected, base58SecureInstanceEncode(bytes));
     }
 
     static String base58InstanceEncode(byte[] bytes) {
         return new Base58().encode(bytes);
+    }
+
+    static String base58SecureInstanceEncode(byte[] bytes) {
+        return Base58.newSecureInstance().encode(bytes);
     }
 
     static String base58StaticEncode(byte[] bytes) {

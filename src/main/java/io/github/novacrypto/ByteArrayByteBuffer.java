@@ -51,11 +51,10 @@ final class ByteArrayByteBuffer implements Base58.ByteBuffer {
     }
 
     private static byte[] ensureCapacity(byte[] bytes, int atLeast) {
-        if (bytes != null && bytes.length >= atLeast) {
+        if (bytes.length >= atLeast) {
             return bytes;
         }
-        if (bytes != null)
-            clear(bytes);
+        clear(bytes);
         return new byte[atLeast];
     }
 

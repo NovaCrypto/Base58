@@ -27,6 +27,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
@@ -34,22 +35,18 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public final class WorkinBufferTests {
 
-    interface WorkingBufferFactory {
-        WorkingBuffer create();
-    }
-
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {(WorkingBufferFactory) ByteArrayWorkingBuffer::new},
-                {(WorkingBufferFactory) SecureWorkingBuffer::new}
+                {(Supplier<WorkingBuffer>) ByteArrayWorkingBuffer::new},
+                {(Supplier<WorkingBuffer>) SecureWorkingBuffer::new}
         });
     }
 
     private final WorkingBuffer buffer;
 
-    public WorkinBufferTests(WorkingBufferFactory factory) {
-        buffer = factory.create();
+    public WorkinBufferTests(Supplier<WorkingBuffer> factory) {
+        buffer = factory.get();
     }
 
     @Test

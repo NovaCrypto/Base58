@@ -42,7 +42,12 @@ final class Base58EncoderDecoder implements
 
     public String encode(byte[] bytes) {
         final StringBuilder sb = new StringBuilder();
-        encode(bytes, sb::append);
+        encode(bytes, new EncodeTarget() {
+            @Override
+            public void append(char c) {
+                sb.append(c);
+            }
+        });
         return sb.toString();
     }
 

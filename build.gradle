@@ -19,7 +19,6 @@
  *  You can contact the authors via github issues.
  */
 
-
 plugins {
     id 'com.jfrog.bintray' version '1.7.3'
 }
@@ -37,6 +36,11 @@ repositories {
 
 repositories {
     mavenCentral()
+}
+
+compileJava {
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
 }
 
 dependencies {
@@ -67,10 +71,10 @@ publishing {
             groupId group
             artifactId 'Base58'
             version project.version
-            artifact("$buildDir/libs/base58-${project.version}-sources.jar"){
+            artifact("$buildDir/libs/base58-${project.version}-sources.jar") {
                 classifier = 'sources'
             }
-            artifact("$buildDir/libs/base58-${project.version}-javadoc.jar"){
+            artifact("$buildDir/libs/base58-${project.version}-javadoc.jar") {
                 classifier = 'javadoc'
             }
             artifact("$buildDir/libs/base58-${project.version}.jar")

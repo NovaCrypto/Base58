@@ -28,7 +28,12 @@ final class ByteArrayTarget implements DecodeTarget {
     @Override
     public DecodeWriter getWriterForLength(int len) {
         bytes = new byte[len];
-        return b -> bytes[idx++] = b;
+        return new DecodeWriter() {
+            @Override
+            public void append(byte b) {
+                bytes[idx++] = b;
+            }
+        };
     }
 
     byte[] asByteArray() {

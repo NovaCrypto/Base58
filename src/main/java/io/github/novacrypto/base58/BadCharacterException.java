@@ -19,10 +19,11 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.json;
+package io.github.novacrypto.base58;
 
-import java.util.List;
+public final class BadCharacterException extends RuntimeException {
 
-public final class TestVectorCollection {
-    public List<TestVector> vectors;
+    public BadCharacterException(char charAtI) {
+        super("Bad character in base58 string, '" + charAtI + "'");
+    }
 }

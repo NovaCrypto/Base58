@@ -19,15 +19,19 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
-import java.util.Arrays;
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
 
-final class ByteArrayByteBuffer implements Base58.ByteBuffer {
+final class SecureWorkingBuffer implements WorkingBuffer {
 
-    private static byte[] EMPTY = new byte[0];
+    private ByteBuffer bytes;
+    private byte[] key = new byte[1021];
 
-    private byte[] bytes = EMPTY;
+    SecureWorkingBuffer() {
+        new SecureRandom().nextBytes(key);
+    }
 
     @Override
     public void setCapacity(final int atLeast) {
@@ -37,12 +41,14 @@ final class ByteArrayByteBuffer implements Base58.ByteBuffer {
 
     @Override
     public byte get(final int index) {
-        return bytes[index];
+        assertIndexValid(index);
+        return encodeDecode(bytes.get(index), index);
     }
 
     @Override
     public void put(final int index, final byte value) {
-        bytes[index] = value;
+        assertIndexValid(index);
+        bytes.put(index, encodeDecode(value, index));
     }
 
     @Override
@@ -50,15 +56,33 @@ final class ByteArrayByteBuffer implements Base58.ByteBuffer {
         clear(bytes);
     }
 
-    private static byte[] ensureCapacity(byte[] bytes, int atLeast) {
-        if (bytes.length >= atLeast) {
-            return bytes;
-        }
-        clear(bytes);
-        return new byte[atLeast];
+    private void assertIndexValid(int index) {
+        if (index < 0 || index >= capacity())
+            throw new IndexOutOfBoundsException();
     }
 
-    private static void clear(byte[] bytes) {
-        Arrays.fill(bytes, (byte) 255);
+    private int capacity() {
+        return bytes == null ? 0 : bytes.capacity();
+    }
+
+    private ByteBuffer ensureCapacity(ByteBuffer bytes, int atLeast) {
+        if (bytes != null && bytes.capacity() >= atLeast) {
+            return bytes;
+        }
+        if (bytes != null)
+            clear(bytes);
+        return ByteBuffer.allocateDirect(atLeast);
+    }
+
+    private void clear(ByteBuffer bytes) {
+        bytes.position(0);
+        final int capacity = bytes.capacity();
+        for (int i = 0; i < capacity; i++) {
+            bytes.put(i, encodeDecode((byte) 255, i));
+        }
+    }
+
+    private byte encodeDecode(byte b, int index) {
+        return (byte) (b ^ key[index % key.length]);
     }
 }

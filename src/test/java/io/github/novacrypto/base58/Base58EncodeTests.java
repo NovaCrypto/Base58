@@ -19,15 +19,18 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import org.junit.Test;
-
-import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
 public final class Base58EncodeTests {
+
+    @Test
+    public void createPackagePrivateForCoverageOnly() {
+        new Base58();
+    }
 
     @Test
     public void emptyByteArray() {
@@ -77,11 +80,13 @@ public final class Base58EncodeTests {
     }
 
     static String base58InstanceEncode(byte[] bytes) {
-        return new Base58().encode(bytes);
+        return Base58.newInstance().encode(bytes);
     }
 
     static String base58SecureInstanceEncode(byte[] bytes) {
-        return Base58.newSecureInstance().encode(bytes);
+        final EncodeTarget target = new InsecureStringBufferEncodeTarget();
+        Base58.newSecureInstance().encode(bytes, target);
+        return target.toString();
     }
 
     static String base58StaticEncode(byte[] bytes) {

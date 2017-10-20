@@ -19,10 +19,11 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
-import io.github.novacrypto.json.TestVector;
-import io.github.novacrypto.json.TestVectorCollection;
+import io.github.novacrypto.base58.json.TestVector;
+import io.github.novacrypto.base58.json.TestVectorCollection;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -30,8 +31,6 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static io.github.novacrypto.Base58DecodeTests.*;
-import static io.github.novacrypto.Base58EncodeTests.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -58,7 +57,7 @@ public final class Base58ResourceTestVectors {
     public void encodeStatic() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertEquals(vector.dataBase58, base58StaticEncode(bytes));
+            Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58StaticEncode(bytes));
         }
     }
 
@@ -66,7 +65,7 @@ public final class Base58ResourceTestVectors {
     public void encodeInstance() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertEquals(vector.dataBase58, base58InstanceEncode(bytes));
+            Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58InstanceEncode(bytes));
         }
     }
 
@@ -74,7 +73,7 @@ public final class Base58ResourceTestVectors {
     public void encodeSecureInstance() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertEquals(vector.dataBase58, base58SecureInstanceEncode(bytes));
+            Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58SecureInstanceEncode(bytes));
         }
     }
 
@@ -83,7 +82,7 @@ public final class Base58ResourceTestVectors {
         ParallelTasks parallelTasks = new ParallelTasks();
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = base58StaticEncode(fromHex(vector.dataHex));
+                String actual = Base58EncodeTests.base58StaticEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -95,7 +94,7 @@ public final class Base58ResourceTestVectors {
         ParallelTasks parallelTasks = new ParallelTasks();
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = base58InstanceEncode(fromHex(vector.dataHex));
+                String actual = Base58EncodeTests.base58InstanceEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -107,7 +106,7 @@ public final class Base58ResourceTestVectors {
         ParallelTasks parallelTasks = new ParallelTasks();
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = base58SecureInstanceEncode(fromHex(vector.dataHex));
+                String actual = Base58EncodeTests.base58SecureInstanceEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -118,7 +117,7 @@ public final class Base58ResourceTestVectors {
     public void decodeStatic() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertArrayEquals(bytes, base58StaticDecode(vector.dataBase58));
+            Assert.assertArrayEquals(bytes, Base58DecodeTests.base58StaticDecode(vector.dataBase58));
         }
     }
 
@@ -126,7 +125,7 @@ public final class Base58ResourceTestVectors {
     public void decodeInstance() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertArrayEquals(bytes, base58InstanceDecode(vector.dataBase58));
+            Assert.assertArrayEquals(bytes, Base58DecodeTests.base58InstanceDecode(vector.dataBase58));
         }
     }
 
@@ -134,7 +133,7 @@ public final class Base58ResourceTestVectors {
     public void decodeSecureInstance() {
         for (TestVector vector : collection.vectors) {
             byte[] bytes = fromHex(vector.dataHex);
-            assertArrayEquals(bytes, base58SecureInstanceDecode(vector.dataBase58));
+            Assert.assertArrayEquals(bytes, Base58DecodeTests.base58SecureInstanceDecode(vector.dataBase58));
         }
     }
 
@@ -144,7 +143,7 @@ public final class Base58ResourceTestVectors {
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
                 byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = base58InstanceDecode(vector.dataBase58);
+                byte[] actual = Base58DecodeTests.base58InstanceDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }
@@ -157,7 +156,7 @@ public final class Base58ResourceTestVectors {
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
                 byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = base58StaticDecode(vector.dataBase58);
+                byte[] actual = Base58DecodeTests.base58StaticDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }
@@ -170,7 +169,7 @@ public final class Base58ResourceTestVectors {
         for (TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
                 byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = base58SecureInstanceDecode(vector.dataBase58);
+                byte[] actual = Base58DecodeTests.base58SecureInstanceDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }

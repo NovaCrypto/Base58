@@ -19,7 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,30 +27,26 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public final class BufferTests {
-
-    interface ByteBufferFactory {
-        Base58.ByteBuffer create();
-    }
+public final class WorkinBufferTests {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {(ByteBufferFactory) ByteArrayByteBuffer::new},
-                {(ByteBufferFactory) SecureByteBuffer::new}
+                {(Supplier<WorkingBuffer>) ByteArrayWorkingBuffer::new},
+                {(Supplier<WorkingBuffer>) SecureWorkingBuffer::new}
         });
     }
 
-    private final Base58.ByteBuffer buffer;
+    private final WorkingBuffer buffer;
 
-
-    public BufferTests(ByteBufferFactory factory) {
-        buffer = factory.create();
+    public WorkinBufferTests(Supplier<WorkingBuffer> factory) {
+        buffer = factory.get();
     }
 
     @Test

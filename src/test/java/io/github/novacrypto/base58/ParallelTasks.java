@@ -19,7 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;

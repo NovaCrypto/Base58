@@ -19,15 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
-final class ByteArrayTarget implements Base58.DecodeTarget {
-    private int idx = 0;
-    byte[] bytes;
-
-    @Override
-    public Base58.DecodeWriter getWriterForLength(int len) {
-        bytes = new byte[len];
-        return b -> bytes[idx++] = b;
-    }
+public interface SecureEncoderDecoder extends SecureEncoder, SecureDecoder{
 }

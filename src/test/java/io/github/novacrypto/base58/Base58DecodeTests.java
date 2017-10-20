@@ -19,7 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto;
+package io.github.novacrypto.base58;
 
 import org.junit.Test;
 
@@ -27,7 +27,6 @@ import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 public final class Base58DecodeTests {
 
@@ -93,7 +92,7 @@ public final class Base58DecodeTests {
     public void badCharacterZero() {
         assertThatThrownBy(
                 () -> base58InstanceDecode("0"))
-                .isInstanceOf(Base58.BadCharacterException.class)
+                .isInstanceOf(BadCharacterException.class)
                 .hasMessage("Bad character in base58 string, '0'");
     }
 
@@ -101,7 +100,7 @@ public final class Base58DecodeTests {
     public void badCharacterLowerL() {
         assertThatThrownBy(
                 () -> base58InstanceDecode("l"))
-                .isInstanceOf(Base58.BadCharacterException.class)
+                .isInstanceOf(BadCharacterException.class)
                 .hasMessage("Bad character in base58 string, 'l'");
     }
 
@@ -109,7 +108,7 @@ public final class Base58DecodeTests {
     public void badCharacterHighUnicode() {
         assertThatThrownBy(
                 () -> base58InstanceDecode("\u01ff"))
-                .isInstanceOf(Base58.BadCharacterException.class)
+                .isInstanceOf(BadCharacterException.class)
                 .hasMessage("Bad character in base58 string, '\u01ff'");
     }
 
@@ -118,7 +117,7 @@ public final class Base58DecodeTests {
         final char next = 'z' + 1;
         assertThatThrownBy(
                 () -> base58InstanceDecode("" + next))
-                .isInstanceOf(Base58.BadCharacterException.class)
+                .isInstanceOf(BadCharacterException.class)
                 .hasMessage("Bad character in base58 string, '{'");
     }
 
@@ -129,11 +128,13 @@ public final class Base58DecodeTests {
     }
 
     static byte[] base58InstanceDecode(CharSequence base58) {
-        return new Base58().decode(base58);
+        return Base58.newInstance().decode(base58);
     }
 
     static byte[] base58SecureInstanceDecode(CharSequence base58) {
-        return Base58.newSecureInstance().decode(base58);
+        final InsecureByteArrayTarget target = new InsecureByteArrayTarget();
+        Base58.newSecureInstance().decode(base58, target);
+        return target.asByteArray();
     }
 
     static byte[] base58StaticDecode(CharSequence base58) {

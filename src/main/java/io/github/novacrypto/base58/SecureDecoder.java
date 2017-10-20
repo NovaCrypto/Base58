@@ -19,9 +19,15 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.json;
+package io.github.novacrypto.base58;
 
-public final class TestVector {
-    public String dataHex;
-    public String dataBase58;
+public interface SecureDecoder {
+
+    /**
+     * Decodes given bytes as a number in base58.
+     *
+     * @param base58 string to decode
+     * @param target Receiver for output
+     */
+    void decode(final CharSequence base58, final DecodeTarget target);
 }

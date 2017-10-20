@@ -23,13 +23,7 @@ package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
-final class Base58EncoderDecoder implements
-        Encoder,
-        Decoder,
-        EncoderDecoder,
-        SecureEncoder,
-        SecureDecoder,
-        SecureEncoderDecoder {
+final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
     private static final int[] VALUES = initValues(DIGITS);
@@ -40,15 +34,11 @@ final class Base58EncoderDecoder implements
         this.workingBuffer = workingBuffer;
     }
 
+    @Override
     public String encode(byte[] bytes) {
-        final StringBuilder sb = new StringBuilder();
-        encode(bytes, new EncodeTarget() {
-            @Override
-            public void append(char c) {
-                sb.append(c);
-            }
-        });
-        return sb.toString();
+        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget();
+        encode(bytes, target);
+        return target.toString();
     }
 
     private WorkingBuffer getBufferOfAtLeastBytes(final int atLeast) {
@@ -56,93 +46,95 @@ final class Base58EncoderDecoder implements
         return workingBuffer;
     }
 
-    /**
-     * Encodes given bytes as a number in base58.
-     *
-     * @param bytes  bytes to encode
-     * @param target where to write resulting string to
-     */
+    @Override
     public void encode(final byte[] bytes, final EncodeTarget target) {
         final char[] a = DIGITS;
         final int bLen = bytes.length;
         final WorkingBuffer d = getBufferOfAtLeastBytes(bLen << 1);
-        int dlen = -1;
-        int blanks = 0;
-        int j = 0;
-        for (int i = 0; i < bLen; i++) {
-            int c = bytes[i] & 0xff;
-            if (c == 0 && blanks == i) {
-                target.append(a[0]);
-                blanks++;
-            }
-            j = 0;
-            while (j <= dlen || c != 0) {
-                int n;
-                if (j > dlen) {
-                    dlen = j;
-                    n = c;
-                } else {
-                    n = d.get(j);
-                    n = (n << 8) + c;
+        try {
+            int dlen = -1;
+            int blanks = 0;
+            int j = 0;
+            for (int i = 0; i < bLen; i++) {
+                int c = bytes[i] & 0xff;
+                if (c == 0 && blanks == i) {
+                    target.append(a[0]);
+                    blanks++;
                 }
-                d.put(j, (byte) (n % 58));
-                c = n / 58;
-                j++;
+                j = 0;
+                while (j <= dlen || c != 0) {
+                    int n;
+                    if (j > dlen) {
+                        dlen = j;
+                        n = c;
+                    } else {
+                        n = d.get(j);
+                        n = (n << 8) + c;
+                    }
+                    d.put(j, (byte) (n % 58));
+                    c = n / 58;
+                    j++;
+                }
             }
+            while (j-- > 0) {
+                target.append(a[d.get(j)]);
+            }
+        } finally {
+            d.clear();
         }
-        while (j-- > 0) {
-            target.append(a[d.get(j)]);
-        }
-        d.clear();
     }
 
+    @Override
     public byte[] decode(final CharSequence base58) {
         final ByteArrayTarget target = new ByteArrayTarget();
         decode(base58, target);
         return target.asByteArray();
     }
 
+    @Override
     public void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
         final WorkingBuffer d = getBufferOfAtLeastBytes(strLen);
-        int dlen = -1;
-        int blanks = 0;
-        int j = 0;
-        for (int i = 0; i < strLen; i++) {
-            j = 0;
-            final char charAtI = base58.charAt(i);
-            int c = valueOf(charAtI);
-            if (c < 0) {
-                d.clear();
-                throw new BadCharacterException(charAtI);
-            }
-            if (c == 0 && blanks == i) {
-                blanks++;
-            }
-            while (j <= dlen || c != 0) {
-                int n;
-                if (j > dlen) {
-                    dlen = j;
-                    n = c;
-                } else {
-                    n = d.get(j) & 0xff;
-                    n = n * 58 + c;
+        try {
+            int dlen = -1;
+            int blanks = 0;
+            int j = 0;
+            for (int i = 0; i < strLen; i++) {
+                j = 0;
+                final char charAtI = base58.charAt(i);
+                int c = valueOf(charAtI);
+                if (c < 0) {
+                    throw new BadCharacterException(charAtI);
                 }
-                d.put(j, (byte) n);
-                c = n >>> 8;
-                j++;
+                if (c == 0 && blanks == i) {
+                    blanks++;
+                }
+                while (j <= dlen || c != 0) {
+                    int n;
+                    if (j > dlen) {
+                        dlen = j;
+                        n = c;
+                    } else {
+                        n = d.get(j) & 0xff;
+                        n = n * 58 + c;
+                    }
+                    d.put(j, (byte) n);
+                    c = n >>> 8;
+                    j++;
+                }
             }
+            final int outputLength = j + blanks;
+            final DecodeWriter writer = target.getWriterForLength(outputLength);
+            for (int i = 0; i < blanks; i++) {
+                writer.append((byte) 0);
+            }
+            final int end = outputLength - 1;
+            for (int i = blanks; i < outputLength; i++) {
+                writer.append(d.get(end - i));
+            }
+        } finally {
+            d.clear();
         }
-        final int outputLength = j + blanks;
-        final DecodeWriter writer = target.getWriterForLength(outputLength);
-        for (int i = 0; i < blanks; i++) {
-            writer.append((byte) 0);
-        }
-        final int end = outputLength - 1;
-        for (int i = blanks; i < outputLength; i++) {
-            writer.append(d.get(end - i));
-        }
-        d.clear();
     }
 
     private static int[] initValues(char[] alphabet) {

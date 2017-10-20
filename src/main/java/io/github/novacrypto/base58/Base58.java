@@ -32,7 +32,7 @@ public final class Base58 {
     Base58() {
     }
 
-    static Base58EncoderDecoder newInstanceWithBuffer(final WorkingBuffer workingBuffer) {
+    public static GeneralEncoderDecoder newInstanceWithBuffer(final WorkingBuffer workingBuffer) {
         return new Base58EncoderDecoder(workingBuffer);
     }
 

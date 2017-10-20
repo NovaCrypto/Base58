@@ -32,9 +32,6 @@ apply plugin: 'jacoco'
 
 repositories {
     jcenter()
-}
-
-repositories {
     mavenCentral()
 }
 

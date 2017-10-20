@@ -32,23 +32,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public final class BufferTests {
+public final class WorkinBufferTests {
 
-    interface ByteBufferFactory {
-        ByteBuffer create();
+    interface WorkingBufferFactory {
+        WorkingBuffer create();
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {(ByteBufferFactory) ByteArrayByteBuffer::new},
-                {(ByteBufferFactory) SecureByteBuffer::new}
+                {(WorkingBufferFactory) ByteArrayWorkingBuffer::new},
+                {(WorkingBufferFactory) SecureWorkingBuffer::new}
         });
     }
 
-    private final ByteBuffer buffer;
+    private final WorkingBuffer buffer;
 
-    public BufferTests(ByteBufferFactory factory) {
+    public WorkinBufferTests(WorkingBufferFactory factory) {
         buffer = factory.create();
     }
 

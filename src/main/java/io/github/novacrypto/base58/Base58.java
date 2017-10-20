@@ -32,12 +32,16 @@ public final class Base58 {
     Base58() {
     }
 
+    static Base58EncoderDecoder newInstanceWithBuffer(final WorkingBuffer workingBuffer) {
+        return new Base58EncoderDecoder(workingBuffer);
+    }
+
     public static EncoderDecoder newInstance() {
-        return new Base58EncoderDecoder(new ByteArrayByteBuffer());
+        return newInstanceWithBuffer(new ByteArrayWorkingBuffer());
     }
 
     public static SecureEncoderDecoder newSecureInstance() {
-        return new Base58EncoderDecoder(new SecureByteBuffer());
+        return newInstanceWithBuffer(new SecureWorkingBuffer());
     }
 
     private static final ThreadLocal<EncoderDecoder> working = new ThreadLocal<>();

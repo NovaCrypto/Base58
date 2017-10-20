@@ -21,7 +21,7 @@
 
 package io.github.novacrypto.base58;
 
-public interface ByteBuffer {
+public interface WorkingBuffer {
     void setCapacity(int atLeast);
 
     byte get(int index);

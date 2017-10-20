@@ -24,12 +24,12 @@ package io.github.novacrypto.base58;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 
-final class SecureByteBuffer implements io.github.novacrypto.base58.ByteBuffer {
+final class SecureWorkingBuffer implements WorkingBuffer {
 
     private ByteBuffer bytes;
     private byte[] key = new byte[1021];
 
-    SecureByteBuffer() {
+    SecureWorkingBuffer() {
         new SecureRandom().nextBytes(key);
     }
 

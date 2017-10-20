@@ -34,10 +34,10 @@ final class Base58EncoderDecoder implements
     private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
     private static final int[] VALUES = initValues(DIGITS);
 
-    private final ByteBuffer byteBuffer;
+    private final WorkingBuffer workingBuffer;
 
-    Base58EncoderDecoder(ByteBuffer byteBuffer) {
-        this.byteBuffer = byteBuffer;
+    Base58EncoderDecoder(WorkingBuffer workingBuffer) {
+        this.workingBuffer = workingBuffer;
     }
 
     public String encode(byte[] bytes) {
@@ -46,9 +46,9 @@ final class Base58EncoderDecoder implements
         return sb.toString();
     }
 
-    private ByteBuffer getBufferOfAtLeastBytes(final int atLeast) {
-        byteBuffer.setCapacity(atLeast);
-        return byteBuffer;
+    private WorkingBuffer getBufferOfAtLeastBytes(final int atLeast) {
+        workingBuffer.setCapacity(atLeast);
+        return workingBuffer;
     }
 
     /**
@@ -60,7 +60,7 @@ final class Base58EncoderDecoder implements
     public void encode(final byte[] bytes, final EncodeTarget target) {
         final char[] a = DIGITS;
         final int bLen = bytes.length;
-        final ByteBuffer d = getBufferOfAtLeastBytes(bLen << 1);
+        final WorkingBuffer d = getBufferOfAtLeastBytes(bLen << 1);
         int dlen = -1;
         int blanks = 0;
         int j = 0;
@@ -99,7 +99,7 @@ final class Base58EncoderDecoder implements
 
     public void decode(final CharSequence base58, final DecodeTarget target) {
         final int strLen = base58.length();
-        final ByteBuffer d = getBufferOfAtLeastBytes(strLen);
+        final WorkingBuffer d = getBufferOfAtLeastBytes(strLen);
         int dlen = -1;
         int blanks = 0;
         int j = 0;

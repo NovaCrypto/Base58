@@ -23,7 +23,7 @@ package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
-final class ByteArrayByteBuffer implements ByteBuffer {
+final class ByteArrayWorkingBuffer implements WorkingBuffer {
 
     private static byte[] EMPTY = new byte[0];
 

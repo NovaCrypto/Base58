@@ -28,6 +28,11 @@ import static org.junit.Assert.assertEquals;
 public final class Base58EncodeTests {
 
     @Test
+    public void createPackagePrivateForCoverageOnly() {
+        new Base58();
+    }
+
+    @Test
     public void emptyByteArray() {
         assertBase58("", new byte[0]);
     }

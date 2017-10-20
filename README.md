@@ -17,7 +17,7 @@ Add dependency:
 
 ```
 dependencies {
-    compile 'io.github.novacrypto:Base58:0.0.3@jar'
+    compile 'io.github.novacrypto:Base58:0.1.0@jar'
 }
 
 ```
@@ -43,13 +43,13 @@ The static methods are threadsafe as they have a shared buffer per thread. They 
 ## Encode (instance method)
 
 ```
-String base58 = new Base58().encode(bytes);
+String base58 = Base58.newInstance().encode(bytes);
 ```
 
 ## Decode (instance method)
 
 ```
-byte[] bytes = new Base58().decode(base58CharSequence);
+byte[] bytes = Base58.newInstance().decode(base58CharSequence);
 ```
 
 The instances are not threadsafe, never share an instance across threads.
@@ -58,7 +58,7 @@ The instances are not threadsafe, never share an instance across threads.
 
 ```
 final StringBuilder sb = new StringBuilder();
-new Base58().encode(bytes, sb::append);
+Base58.newSecureInstance().encode(bytes, sb::append);
 return sb.toString();
 ```
 
@@ -77,7 +77,7 @@ static class ByteArrayTarget implements DecodeTarget {
 }
 
 ByteArrayTarget target = new ByteArrayTarget();
-new Base58().decode(base58, target);
+Base58.newSecureInstance().decode(base58, target);
 target.bytes;
 ```
 

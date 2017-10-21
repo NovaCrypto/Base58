@@ -1,7 +1,16 @@
 [![Download](https://api.bintray.com/packages/novacrypto/BIP/Base58/images/download.svg)](https://bintray.com/novacrypto/BIP/Base58/_latestVersion) [![Build Status](https://travis-ci.org/NovaCrypto/Base58.svg?branch=master)](https://travis-ci.org/NovaCrypto/Base58) [![codecov](https://codecov.io/gh/NovaCrypto/Base58/branch/master/graph/badge.svg)](https://codecov.io/gh/NovaCrypto/Base58)
 
-
 # Install
+
+Use either of these repositories:
+
+```
+repositories {
+    jcenter()
+}
+```
+
+Or:
 
 ```
 repositories {
@@ -10,8 +19,6 @@ repositories {
     }
 }
 ```
-
-(`jcenter()` coming soon)
 
 Add dependency:
 

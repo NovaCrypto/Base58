@@ -53,7 +53,7 @@ public final class Base58 {
      * @param bytes bytes to encode
      * @return base58 string representation
      */
-    public static CharSequence base58Encode(byte[] bytes) {
+    public static String base58Encode(byte[] bytes) {
         return getThreadSharedBase58().encode(bytes);
     }
 

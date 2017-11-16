@@ -83,7 +83,7 @@ dependencyUpdates {
 
 bintrayUpload.dependsOn(dependencyUpdates)
 
-task(installSharedIdea, type: Copy) {
+task('installSharedIdea', type: Copy) {
     description = "Copy the shared intellij files into local .idea/"
     from 'ideaShared/'
     into '.idea/'

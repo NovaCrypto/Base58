@@ -21,20 +21,21 @@
 
 package io.github.novacrypto.base58;
 
-final class StringBuilderEncodeTarget implements EncodeTarget {
-    final StringBuilder sb;
+final class CapacityEstimator {
 
-    StringBuilderEncodeTarget(int capacity) {
-        sb = new StringBuilder(capacity);
+    CapacityEstimator() {
     }
 
-    @Override
-    public void append(char c) {
-        sb.append(c);
-    }
+    private static final double log2_58 = Math.log(58) / Math.log(2);
 
-    @Override
-    public String toString() {
-        return sb.toString();
+    private static final double storageRatio = 8.0 / log2_58;
+
+    /**
+     * Estimates max length of base58 string using formula:
+     * <p>
+     * maxLength characters = length bytes * 8 bits per byte / Log2(58) bits per character
+     */
+    static int estimateMaxLength(int byteLength) {
+        return (int) Math.ceil(byteLength * storageRatio);
     }
 }

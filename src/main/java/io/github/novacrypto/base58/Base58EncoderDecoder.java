@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
+import static io.github.novacrypto.base58.CapacityEstimator.estimateMaxLength;
+
 final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     private static final char[] DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
@@ -36,7 +38,7 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     @Override
     public String encode(byte[] bytes) {
-        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget();
+        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget(estimateMaxLength(bytes.length));
         encode(bytes, target);
         return target.toString();
     }

@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,22 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
-final class InsecureStringBufferEncodeTarget implements EncodeTarget {
-    private final StringBuilder stringBuilder = new StringBuilder();
+import io.github.novacrypto.base58.DecodeTarget;
+import io.github.novacrypto.base58.DecodeWriter;
+
+final class InsecureByteArrayTarget implements DecodeTarget {
+    private int idx = 0;
+    private byte[] bytes;
 
     @Override
-    public void append(char c) {
-        stringBuilder.append(c);
+    public DecodeWriter getWriterForLength(final int len) {
+        bytes = new byte[len];
+        return b -> bytes[idx++] = b;
     }
 
-    @Override
-    public String toString() {
-        return stringBuilder.toString();
+    byte[] asByteArray() {
+        return bytes;
     }
 }

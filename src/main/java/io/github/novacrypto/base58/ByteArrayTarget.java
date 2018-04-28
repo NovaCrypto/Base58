@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ final class ByteArrayTarget implements DecodeTarget {
     private byte[] bytes;
 
     @Override
-    public DecodeWriter getWriterForLength(int len) {
+    public DecodeWriter getWriterForLength(final int len) {
         bytes = new byte[len];
         return new DecodeWriter() {
             @Override
-            public void append(byte b) {
+            public void append(final byte b) {
                 bytes[idx++] = b;
             }
         };

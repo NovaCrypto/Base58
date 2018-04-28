@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ package io.github.novacrypto.base58;
 
 public final class BadCharacterException extends RuntimeException {
 
-    public BadCharacterException(char charAtI) {
+    public BadCharacterException(final char charAtI) {
         super("Bad character in base58 string, '" + charAtI + "'");
     }
 }

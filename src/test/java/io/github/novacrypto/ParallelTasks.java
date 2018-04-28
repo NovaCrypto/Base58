@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,14 +19,18 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class ParallelTasks {
+final class ParallelTasks {
 
     public interface A {
         Runnable runTest();
@@ -34,15 +38,15 @@ public final class ParallelTasks {
 
     private final Collection<A> tasks = new ArrayList<>();
 
-    public void add(final A task) {
+    void add(final A task) {
         tasks.add(task);
     }
 
-    public void go() throws InterruptedException {
+    void go() throws InterruptedException {
         final ExecutorService threads = Executors.newFixedThreadPool(Runtime.getRuntime()
                 .availableProcessors());
         try {
-            final List<Runnable> results = Collections.synchronizedList(new LinkedList<Runnable>());
+            final List<Runnable> results = Collections.synchronizedList(new LinkedList<>());
             final CountDownLatch latch = new CountDownLatch(tasks.size());
             for (final A task : tasks)
                 threads.execute(() -> {

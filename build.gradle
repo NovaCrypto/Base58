@@ -70,11 +70,11 @@ compileJava {
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'com.google.code.gson:gson:2.8.2'
-    testCompile 'org.assertj:assertj-core:3.8.0'
+    testCompile 'org.assertj:assertj-core:3.9.1'
 }
 
 dependencyUpdates {
-    outputFormatter = { result ->
+    outputFormatter = { final result ->
         if (!result.outdated.dependencies.isEmpty()) {
             throw new GradleException('Abort, there are dependencies to update.')
         }

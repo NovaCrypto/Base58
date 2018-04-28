@@ -35,7 +35,7 @@ final class CapacityEstimator {
      * <p>
      * maxLength characters = length bytes * 8 bits per byte / Log2(58) bits per character
      */
-    static int estimateMaxLength(int byteLength) {
+    static int estimateMaxLength(final int byteLength) {
         return (int) Math.ceil(byteLength * storageRatio);
     }
 }

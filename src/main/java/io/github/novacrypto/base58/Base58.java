@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ public final class Base58 {
      * @param bytes bytes to encode
      * @return base58 string representation
      */
-    public static String base58Encode(byte[] bytes) {
+    public static String base58Encode(final byte[] bytes) {
         return getThreadSharedBase58().encode(bytes);
     }
 

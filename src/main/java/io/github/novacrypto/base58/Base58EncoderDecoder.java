@@ -32,12 +32,12 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     private final WorkingBuffer workingBuffer;
 
-    Base58EncoderDecoder(WorkingBuffer workingBuffer) {
+    Base58EncoderDecoder(final WorkingBuffer workingBuffer) {
         this.workingBuffer = workingBuffer;
     }
 
     @Override
-    public String encode(byte[] bytes) {
+    public String encode(final byte[] bytes) {
         final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget(estimateMaxLength(bytes.length));
         encode(bytes, target);
         return target.toString();
@@ -139,7 +139,7 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
         }
     }
 
-    private static int[] initValues(char[] alphabet) {
+    private static int[] initValues(final char[] alphabet) {
         final int[] lookup = new int['z' + 1];
         Arrays.fill(lookup, -1);
         for (int i = 0; i < alphabet.length; i++)

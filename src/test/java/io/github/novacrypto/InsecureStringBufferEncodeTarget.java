@@ -19,7 +19,20 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
-public interface SecureEncoderDecoder extends SecureEncoder, SecureDecoder {
+import io.github.novacrypto.base58.EncodeTarget;
+
+final class InsecureStringBufferEncodeTarget implements EncodeTarget {
+    private final StringBuilder stringBuilder = new StringBuilder();
+
+    @Override
+    public void append(final char c) {
+        stringBuilder.append(c);
+    }
+
+    @Override
+    public String toString() {
+        return stringBuilder.toString();
+    }
 }

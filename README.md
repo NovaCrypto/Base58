@@ -117,4 +117,4 @@ These advanced usages avoid allocating memory and allow [SecureByteBuffer](https
 ## 0.1.3
 
 - Update dependencies
-- Add EncodeTargetFromCapacity and EncodeTargetCapacity interfaces and encode overloads
+- Add `EncodeTargetFromCapacity` and `EncodeTargetCapacity` interfaces and related `SecureEncoder#encode` method overloads

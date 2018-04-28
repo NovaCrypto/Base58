@@ -31,6 +31,7 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
     private static final int[] VALUES = initValues(DIGITS);
 
     private final WorkingBuffer workingBuffer;
+    private final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget();
 
     Base58EncoderDecoder(final WorkingBuffer workingBuffer) {
         this.workingBuffer = workingBuffer;
@@ -38,9 +39,8 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     @Override
     public String encode(final byte[] bytes) {
-        final int characters = maximumBase58StringLength(bytes.length);
-        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget(characters);
-        encode(bytes, target, characters);
+        target.clear();
+        encode(bytes, target, target);
         return target.toString();
     }
 

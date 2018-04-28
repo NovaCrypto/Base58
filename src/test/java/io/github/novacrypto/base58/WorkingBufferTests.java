@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public final class WorkinBufferTests {
+public final class WorkingBufferTests {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -45,7 +45,7 @@ public final class WorkinBufferTests {
 
     private final WorkingBuffer buffer;
 
-    public WorkinBufferTests(Supplier<WorkingBuffer> factory) {
+    public WorkingBufferTests(final Supplier<WorkingBuffer> factory) {
         buffer = factory.get();
     }
 
@@ -150,7 +150,7 @@ public final class WorkinBufferTests {
         assertAllCleared(20);
     }
 
-    private void assertAllCleared(int len) {
+    private void assertAllCleared(final int len) {
         for (int i = 0; i < len; i++) {
             assertEquals((byte) 255, buffer.get(i));
         }

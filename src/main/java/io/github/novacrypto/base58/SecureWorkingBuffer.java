@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import java.security.SecureRandom;
 final class SecureWorkingBuffer implements WorkingBuffer {
 
     private ByteBuffer bytes;
-    private byte[] key = new byte[1021];
+    private final byte[] key = new byte[1021];
 
     SecureWorkingBuffer() {
         new SecureRandom().nextBytes(key);
@@ -56,7 +56,7 @@ final class SecureWorkingBuffer implements WorkingBuffer {
         clear(bytes);
     }
 
-    private void assertIndexValid(int index) {
+    private void assertIndexValid(final int index) {
         if (index < 0 || index >= capacity())
             throw new IndexOutOfBoundsException();
     }
@@ -65,7 +65,7 @@ final class SecureWorkingBuffer implements WorkingBuffer {
         return bytes == null ? 0 : bytes.capacity();
     }
 
-    private ByteBuffer ensureCapacity(ByteBuffer bytes, int atLeast) {
+    private ByteBuffer ensureCapacity(final ByteBuffer bytes, final int atLeast) {
         if (bytes != null && bytes.capacity() >= atLeast) {
             return bytes;
         }
@@ -74,7 +74,7 @@ final class SecureWorkingBuffer implements WorkingBuffer {
         return ByteBuffer.allocateDirect(atLeast);
     }
 
-    private void clear(ByteBuffer bytes) {
+    private void clear(final ByteBuffer bytes) {
         bytes.position(0);
         final int capacity = bytes.capacity();
         for (int i = 0; i < capacity; i++) {
@@ -82,7 +82,7 @@ final class SecureWorkingBuffer implements WorkingBuffer {
         }
     }
 
-    private byte encodeDecode(byte b, int index) {
+    private byte encodeDecode(final byte b, final int index) {
         return (byte) (b ^ key[index % key.length]);
     }
 }

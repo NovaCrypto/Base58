@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,15 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
+import io.github.novacrypto.base58.Base58;
+import io.github.novacrypto.base58.EncodeTarget;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public final class Base58EncodeTests {
-
-    @Test
-    public void createPackagePrivateForCoverageOnly() {
-        new Base58();
-    }
 
     @Test
     public void emptyByteArray() {
@@ -64,7 +61,7 @@ public final class Base58EncodeTests {
 
     @Test
     public void allByteValues() {
-        byte[] bytes = new byte[256];
+        final byte[] bytes = new byte[256];
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) i;
         }
@@ -73,23 +70,23 @@ public final class Base58EncodeTests {
                 bytes);
     }
 
-    private void assertBase58(String expected, byte[] bytes) {
+    private void assertBase58(final String expected, final byte[] bytes) {
         assertEquals(expected, base58InstanceEncode(bytes));
         assertEquals(expected, base58StaticEncode(bytes));
         assertEquals(expected, base58SecureInstanceEncode(bytes));
     }
 
-    static String base58InstanceEncode(byte[] bytes) {
+    static String base58InstanceEncode(final byte[] bytes) {
         return Base58.newInstance().encode(bytes);
     }
 
-    static String base58SecureInstanceEncode(byte[] bytes) {
+    static String base58SecureInstanceEncode(final byte[] bytes) {
         final EncodeTarget target = new InsecureStringBufferEncodeTarget();
         Base58.newSecureInstance().encode(bytes, target);
         return target.toString();
     }
 
-    static String base58StaticEncode(byte[] bytes) {
-        return Base58.base58Encode(bytes).toString();
+    static String base58StaticEncode(final byte[] bytes) {
+        return Base58.base58Encode(bytes);
     }
 }

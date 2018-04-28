@@ -30,11 +30,6 @@ import static org.junit.Assert.assertEquals;
 public final class CapacityEstimatorTests {
 
     @Test
-    public void constructor_for_coverage() {
-        new CapacityEstimator();
-    }
-
-    @Test
     public void capacity_of_low_numbers() {
         for (int byteLength = 0; byteLength < 512; byteLength++) {
             assertEquals(actualMaxLengthOfBytes(byteLength), estimateMaxLength(byteLength));
@@ -48,11 +43,11 @@ public final class CapacityEstimatorTests {
         }
     }
 
-    private static int actualMaxLengthOfBytes(int byteLength) {
+    private static int actualMaxLengthOfBytes(final int byteLength) {
         return base58Encode(getBytesWithMaxValue(byteLength)).length();
     }
 
-    private static byte[] getBytesWithMaxValue(int byteLength) {
+    private static byte[] getBytesWithMaxValue(final int byteLength) {
         final byte[] bytes = new byte[byteLength];
         for (int i = 0; i < byteLength; i++) {
             bytes[i] = (byte) 255;

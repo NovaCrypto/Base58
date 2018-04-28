@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,19 +19,28 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
-final class InsecureByteArrayTarget implements DecodeTarget {
-    private int idx = 0;
-    private byte[] bytes;
+import com.google.gson.Gson;
 
-    @Override
-    public DecodeWriter getWriterForLength(int len) {
-        bytes = new byte[len];
-        return b -> bytes[idx++] = b;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
+
+final class Resources {
+
+    private Resources() {
     }
 
-    byte[] asByteArray() {
-        return bytes;
+    static <T> T loadJsonResource(final String resourceName, final Class<T> classOfT) {
+        try {
+            try (final InputStreamReader in = new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName))) {
+                final String json = new BufferedReader(in).lines().collect(Collectors.joining("\n"));
+                return new Gson().fromJson(json, classOfT);
+            }
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -22,14 +22,14 @@
 package io.github.novacrypto.base58;
 
 final class StringBuilderEncodeTarget implements EncodeTarget {
-    final StringBuilder sb;
+    private final StringBuilder sb;
 
-    StringBuilderEncodeTarget(int capacity) {
+    StringBuilderEncodeTarget(final int capacity) {
         sb = new StringBuilder(capacity);
     }
 
     @Override
-    public void append(char c) {
+    public void append(final char c) {
         sb.append(c);
     }
 

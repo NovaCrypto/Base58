@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
-final class ByteArrayWorkingBuffer implements WorkingBuffer {
+public final class ByteArrayWorkingBuffer implements WorkingBuffer {
 
-    private static byte[] EMPTY = new byte[0];
+    private static final byte[] EMPTY = new byte[0];
 
     private byte[] bytes = EMPTY;
 
@@ -50,7 +50,7 @@ final class ByteArrayWorkingBuffer implements WorkingBuffer {
         clear(bytes);
     }
 
-    private static byte[] ensureCapacity(byte[] bytes, int atLeast) {
+    private static byte[] ensureCapacity(final byte[] bytes, final int atLeast) {
         if (bytes.length >= atLeast) {
             return bytes;
         }
@@ -58,7 +58,7 @@ final class ByteArrayWorkingBuffer implements WorkingBuffer {
         return new byte[atLeast];
     }
 
-    private static void clear(byte[] bytes) {
+    private static void clear(final byte[] bytes) {
         Arrays.fill(bytes, (byte) 255);
     }
 }

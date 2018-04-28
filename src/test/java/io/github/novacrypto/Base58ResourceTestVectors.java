@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *  You can contact the authors via github issues.
  */
 
-package io.github.novacrypto.base58;
+package io.github.novacrypto;
 
 import io.github.novacrypto.base58.json.TestVector;
 import io.github.novacrypto.base58.json.TestVectorCollection;
@@ -49,40 +49,40 @@ public final class Base58ResourceTestVectors {
 
     private final TestVectorCollection collection;
 
-    public Base58ResourceTestVectors(String resourceName) {
+    public Base58ResourceTestVectors(final String resourceName) {
         collection = Resources.loadJsonResource(resourceName, TestVectorCollection.class);
     }
 
     @Test
     public void encodeStatic() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58StaticEncode(bytes));
         }
     }
 
     @Test
     public void encodeInstance() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58InstanceEncode(bytes));
         }
     }
 
     @Test
     public void encodeSecureInstance() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertEquals(vector.dataBase58, Base58EncodeTests.base58SecureInstanceEncode(bytes));
         }
     }
 
     @Test
     public void encodeParallelStatic() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = Base58EncodeTests.base58StaticEncode(fromHex(vector.dataHex));
+                final String actual = Base58EncodeTests.base58StaticEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -91,10 +91,10 @@ public final class Base58ResourceTestVectors {
 
     @Test
     public void encodeParallelInstance() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = Base58EncodeTests.base58InstanceEncode(fromHex(vector.dataHex));
+                final String actual = Base58EncodeTests.base58InstanceEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -103,10 +103,10 @@ public final class Base58ResourceTestVectors {
 
     @Test
     public void encodeParallelSecureInstance() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                String actual = Base58EncodeTests.base58SecureInstanceEncode(fromHex(vector.dataHex));
+                final String actual = Base58EncodeTests.base58SecureInstanceEncode(fromHex(vector.dataHex));
                 return () -> assertEquals(vector.dataBase58, actual);
             });
         }
@@ -115,35 +115,35 @@ public final class Base58ResourceTestVectors {
 
     @Test
     public void decodeStatic() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertArrayEquals(bytes, Base58DecodeTests.base58StaticDecode(vector.dataBase58));
         }
     }
 
     @Test
     public void decodeInstance() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertArrayEquals(bytes, Base58DecodeTests.base58InstanceDecode(vector.dataBase58));
         }
     }
 
     @Test
     public void decodeSecureInstance() {
-        for (TestVector vector : collection.vectors) {
-            byte[] bytes = fromHex(vector.dataHex);
+        for (final TestVector vector : collection.vectors) {
+            final byte[] bytes = fromHex(vector.dataHex);
             Assert.assertArrayEquals(bytes, Base58DecodeTests.base58SecureInstanceDecode(vector.dataBase58));
         }
     }
 
     @Test
     public void decodeParallelInstance() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = Base58DecodeTests.base58InstanceDecode(vector.dataBase58);
+                final byte[] expected = fromHex(vector.dataHex);
+                final byte[] actual = Base58DecodeTests.base58InstanceDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }
@@ -152,11 +152,11 @@ public final class Base58ResourceTestVectors {
 
     @Test
     public void decodeParallelStatic() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = Base58DecodeTests.base58StaticDecode(vector.dataBase58);
+                final byte[] expected = fromHex(vector.dataHex);
+                final byte[] actual = Base58DecodeTests.base58StaticDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }
@@ -165,20 +165,20 @@ public final class Base58ResourceTestVectors {
 
     @Test
     public void decodeParallelSecureInstance() throws InterruptedException {
-        ParallelTasks parallelTasks = new ParallelTasks();
-        for (TestVector vector : collection.vectors) {
+        final ParallelTasks parallelTasks = new ParallelTasks();
+        for (final TestVector vector : collection.vectors) {
             parallelTasks.add(() -> {
-                byte[] expected = fromHex(vector.dataHex);
-                byte[] actual = Base58DecodeTests.base58SecureInstanceDecode(vector.dataBase58);
+                final byte[] expected = fromHex(vector.dataHex);
+                final byte[] actual = Base58DecodeTests.base58SecureInstanceDecode(vector.dataBase58);
                 return () -> assertArrayEquals(expected, actual);
             });
         }
         parallelTasks.go();
     }
 
-    private static byte[] fromHex(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
+    private static byte[] fromHex(final String s) {
+        final int len = s.length();
+        final byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2)
             data[i / 2] = (byte) ((
                     Character.digit(s.charAt(i), 16) << 4) +

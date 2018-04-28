@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,26 +21,19 @@
 
 package io.github.novacrypto.base58;
 
-import com.google.gson.Gson;
+import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
+public final class ConstructorCoverage {
 
-final class Resources {
-
-    private Resources() {
+    @Test
+    public void base58_constructor_for_coverage_only() {
+        new Base58();
     }
 
-    static <T> T loadJsonResource(String resourceName, Class<T> classOfT) {
-        try {
-            try (final InputStreamReader in = new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName))) {
-                final String json = new BufferedReader(in).lines().collect(Collectors.joining("\n"));
-                return new Gson().fromJson(json, classOfT);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+    @Test
+    public void capacityEstimator_constructor_for_coverage_only() {
+        new CapacityEstimator();
     }
+
 }

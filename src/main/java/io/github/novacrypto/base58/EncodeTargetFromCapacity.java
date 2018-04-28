@@ -21,19 +21,7 @@
 
 package io.github.novacrypto.base58;
 
-import org.junit.Test;
+public interface EncodeTargetFromCapacity {
 
-public final class ConstructorCoverage {
-
-    @Test
-    public void base58_constructor_for_coverage_only() {
-        new Base58();
-    }
-
-
-    @Test
-    public void capacityCalculator_constructor_for_coverage_only() {
-        new CapacityCalculator();
-    }
-
+    EncodeTarget withCapacity(int characters);
 }

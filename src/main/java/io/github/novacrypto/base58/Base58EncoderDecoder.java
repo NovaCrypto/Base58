@@ -23,7 +23,7 @@ package io.github.novacrypto.base58;
 
 import java.util.Arrays;
 
-import static io.github.novacrypto.base58.CapacityEstimator.estimateMaxLength;
+import static io.github.novacrypto.base58.CapacityCalculator.maximumBase58StringLength;
 
 final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
@@ -38,21 +38,35 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
 
     @Override
     public String encode(final byte[] bytes) {
-        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget(estimateMaxLength(bytes.length));
-        encode(bytes, target);
+        final int characters = maximumBase58StringLength(bytes.length);
+        final StringBuilderEncodeTarget target = new StringBuilderEncodeTarget(characters);
+        encode(bytes, target, characters);
         return target.toString();
     }
 
-    private WorkingBuffer getBufferOfAtLeastBytes(final int atLeast) {
-        workingBuffer.setCapacity(atLeast);
-        return workingBuffer;
+    @Override
+    public void encode(final byte[] bytes, final EncodeTargetFromCapacity target) {
+        final int characters = maximumBase58StringLength(bytes.length);
+        encode(bytes, target.withCapacity(characters), characters);
+    }
+
+    @Override
+    public void encode(final byte[] bytes, final EncodeTargetCapacity setCapacity, final EncodeTarget target) {
+        final int characters = maximumBase58StringLength(bytes.length);
+        setCapacity.setCapacity(characters);
+        encode(bytes, target, characters);
     }
 
     @Override
     public void encode(final byte[] bytes, final EncodeTarget target) {
+        final int characters = maximumBase58StringLength(bytes.length);
+        encode(bytes, target, characters);
+    }
+
+    private void encode(final byte[] bytes, final EncodeTarget target, final int capacity) {
         final char[] a = DIGITS;
         final int bLen = bytes.length;
-        final WorkingBuffer d = getBufferOfAtLeastBytes(bLen << 1);
+        final WorkingBuffer d = getBufferOfAtLeastBytes(capacity);
         try {
             int dlen = -1;
             int blanks = 0;
@@ -137,6 +151,11 @@ final class Base58EncoderDecoder implements GeneralEncoderDecoder {
         } finally {
             d.clear();
         }
+    }
+
+    private WorkingBuffer getBufferOfAtLeastBytes(final int atLeast) {
+        workingBuffer.setCapacity(atLeast);
+        return workingBuffer;
     }
 
     private static int[] initValues(final char[] alphabet) {

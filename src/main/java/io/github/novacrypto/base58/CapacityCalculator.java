@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,31 +21,26 @@
 
 package io.github.novacrypto.base58;
 
-public interface SecureEncoder {
+final class CapacityCalculator {
+
+    CapacityCalculator() {
+    }
+
+    private static final double log2_58 = Math.log(58) / Math.log(2);
+
+    private static final double storageRatio = 8.0 / log2_58;
 
     /**
-     * Encodes given bytes as a number in base58.
+     * Calculates the maximum length of a base58 string using formula:
+     * <p>
+     * maxLength characters = length bytes * 8 bits per byte / Log2(58) bits per character
+     * <p>
+     * The length may be less depending on the actual data inside the array.
+     * <p>
      *
-     * @param bytes  bytes to encode
-     * @param target where to write resulting string to
+     * @return equivalent to {@code base58Encode(new byte[byteLength]{0xff,0xff,0xff...}).length}
      */
-    void encode(final byte[] bytes, final EncodeTarget target);
-
-
-    /**
-     * Encodes given bytes as a number in base58.
-     *
-     * @param bytes       bytes to encode
-     * @param setCapacity a callback to the target to set its capacity
-     * @param target      where to write resulting string to
-     */
-    void encode(final byte[] bytes, final EncodeTargetCapacity setCapacity, final EncodeTarget target);
-
-    /**
-     * Encodes given bytes as a number in base58.
-     *
-     * @param bytes  bytes to encode
-     * @param target where to write resulting string to
-     */
-    void encode(final byte[] bytes, final EncodeTargetFromCapacity target);
+    static int maximumBase58StringLength(final int byteLength) {
+        return (int) Math.ceil(byteLength * storageRatio);
+    }
 }

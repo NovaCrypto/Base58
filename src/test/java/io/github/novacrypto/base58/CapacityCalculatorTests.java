@@ -24,22 +24,22 @@ package io.github.novacrypto.base58;
 import org.junit.Test;
 
 import static io.github.novacrypto.base58.Base58.base58Encode;
-import static io.github.novacrypto.base58.CapacityEstimator.estimateMaxLength;
+import static io.github.novacrypto.base58.CapacityCalculator.maximumBase58StringLength;
 import static org.junit.Assert.assertEquals;
 
-public final class CapacityEstimatorTests {
+public final class CapacityCalculatorTests {
 
     @Test
-    public void capacity_of_low_numbers() {
-        for (int byteLength = 0; byteLength < 512; byteLength++) {
-            assertEquals(actualMaxLengthOfBytes(byteLength), estimateMaxLength(byteLength));
+    public void capacity_of_low_byte_lengths() {
+        for (int byteLength = 0; byteLength < 1000; byteLength++) {
+            assertEquals(actualMaxLengthOfBytes(byteLength), maximumBase58StringLength(byteLength));
         }
     }
 
     @Test
-    public void capacity_of_high_numbers() {
+    public void capacity_of_higher_byte_lengths() {
         for (int byteLength = 2000; byteLength < 2050; byteLength++) {
-            assertEquals(actualMaxLengthOfBytes(byteLength), estimateMaxLength(byteLength));
+            assertEquals(actualMaxLengthOfBytes(byteLength), maximumBase58StringLength(byteLength));
         }
     }
 
@@ -47,7 +47,7 @@ public final class CapacityEstimatorTests {
         return base58Encode(getBytesWithMaxValue(byteLength)).length();
     }
 
-    private static byte[] getBytesWithMaxValue(final int byteLength) {
+    static byte[] getBytesWithMaxValue(final int byteLength) {
         final byte[] bytes = new byte[byteLength];
         for (int i = 0; i < byteLength; i++) {
             bytes[i] = (byte) 255;

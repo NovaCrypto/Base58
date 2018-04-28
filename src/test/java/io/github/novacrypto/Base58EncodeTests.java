@@ -74,6 +74,8 @@ public final class Base58EncodeTests {
         assertEquals(expected, base58InstanceEncode(bytes));
         assertEquals(expected, base58StaticEncode(bytes));
         assertEquals(expected, base58SecureInstanceEncode(bytes));
+        assertEquals(expected, base58SecureInstanceEncodeSetCapacity(bytes));
+        assertEquals(expected, base58SecureInstanceEncodeFluentCapacity(bytes));
     }
 
     static String base58InstanceEncode(final byte[] bytes) {
@@ -84,6 +86,21 @@ public final class Base58EncodeTests {
         final EncodeTarget target = new InsecureStringBufferEncodeTarget();
         Base58.newSecureInstance().encode(bytes, target);
         return target.toString();
+    }
+
+    private static String base58SecureInstanceEncodeSetCapacity(final byte[] bytes) {
+        final StringBuilder sb = new StringBuilder();
+        Base58.newSecureInstance().encode(bytes, sb::ensureCapacity, sb::append);
+        return sb.toString();
+    }
+
+    static String base58SecureInstanceEncodeFluentCapacity(final byte[] bytes) {
+        final StringBuilder sb = new StringBuilder();
+        Base58.newSecureInstance().encode(bytes, (i) -> {
+            sb.ensureCapacity(i);
+            return sb::append;
+        });
+        return sb.toString();
     }
 
     static String base58StaticEncode(final byte[] bytes) {

@@ -24,7 +24,7 @@ Add dependency:
 
 ```
 dependencies {
-    compile 'io.github.novacrypto:Base58:0.1.2@jar'
+    compile 'io.github.novacrypto:Base58:0.1.3@jar'
 }
 
 ```
@@ -63,9 +63,31 @@ The instances are not threadsafe, never share an instance across threads.
 
 ## Encode (to a target, instance method)
 
+Either:
+
 ```
 final StringBuilder sb = new StringBuilder();
 Base58.newSecureInstance().encode(bytes, sb::append);
+return sb.toString();
+```
+
+Or let it get told the correct initial maximum size:
+
+```
+final StringBuilder sb = new StringBuilder();
+Base58.newSecureInstance().encode(bytes, sb::ensureCapacity, sb::append);
+return sb.toString();
+```
+
+Or supply a implementation of `EncodeTargetFromCapacity`:
+
+```
+final StringBuilder sb = new StringBuilder();
+Base58.newSecureInstance().encode(bytes, (charLength) -> {
+    // gives you a chance to allocate memory before passing the buffer as an EncodeTarget
+    sb.ensureCapacity(charLength);
+    return sb::append; // EncodeTarget
+});
 return sb.toString();
 ```
 

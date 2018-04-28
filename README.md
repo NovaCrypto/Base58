@@ -111,3 +111,10 @@ target.bytes;
 ```
 
 These advanced usages avoid allocating memory and allow [SecureByteBuffer](https://github.com/NovaCrypto/SecureString/blob/master/src/main/java/io/github/novacrypto/SecureByteBuffer.java) usage.
+
+# Change Log
+
+## 0.1.3
+
+- Update dependencies
+- Add `EncodeTargetFromCapacity` and `EncodeTargetCapacity` interfaces and related `SecureEncoder#encode` method overloads

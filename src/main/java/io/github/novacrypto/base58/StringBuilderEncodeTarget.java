@@ -21,11 +21,12 @@
 
 package io.github.novacrypto.base58;
 
-final class StringBuilderEncodeTarget implements EncodeTarget {
-    private final StringBuilder sb;
+final class StringBuilderEncodeTarget implements EncodeTarget, EncodeTargetCapacity {
+    private final StringBuilder sb = new StringBuilder();
 
-    StringBuilderEncodeTarget(final int capacity) {
-        sb = new StringBuilder(capacity);
+    @Override
+    public void setCapacity(final int characters) {
+        sb.ensureCapacity(characters);
     }
 
     @Override
@@ -36,5 +37,9 @@ final class StringBuilderEncodeTarget implements EncodeTarget {
     @Override
     public String toString() {
         return sb.toString();
+    }
+
+    void clear() {
+        sb.setLength(0);
     }
 }

@@ -21,21 +21,12 @@
 
 package io.github.novacrypto.base58;
 
-final class CapacityEstimator {
-
-    CapacityEstimator() {
-    }
-
-    private static final double log2_58 = Math.log(58) / Math.log(2);
-
-    private static final double storageRatio = 8.0 / log2_58;
+public interface EncodeTargetCapacity {
 
     /**
-     * Estimates max length of base58 string using formula:
-     * <p>
-     * maxLength characters = length bytes * 8 bits per byte / Log2(58) bits per character
+     * Sets capacity required for encoding. This may be over the actual required size, but never under.
+     *
+     * @param characters Maximum number of base58 characters required during encoding.
      */
-    static int estimateMaxLength(final int byteLength) {
-        return (int) Math.ceil(byteLength * storageRatio);
-    }
+    void setCapacity(int characters);
 }

@@ -38,7 +38,7 @@ apply from: 'bintray.gradle'
 apply plugin: 'com.github.ben-manes.versions'
 
 group 'io.github.novacrypto'
-version '0.1.3'
+version '2018.10.06'
 
 // To upload a new version
 // ./gradlew clean build bintrayUpload -Puser=user -Pkey=APIKEY
@@ -71,22 +71,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'com.google.code.gson:gson:2.8.5'
     testCompile 'org.assertj:assertj-core:3.11.1'
-}
-
-dependencyUpdates {
-    outputFormatter = { final result ->
-        if (!result.outdated.dependencies.isEmpty()) {
-            throw new GradleException('Abort, there are dependencies to update.')
-        }
-    }
-}
-
-bintrayUpload.dependsOn(dependencyUpdates)
-
-task('installSharedIdea', type: Copy) {
-    description = "Copy the shared intellij files into local .idea/"
-    from 'ideaShared/'
-    into '.idea/'
 }
 
 compileJava.options.encoding = 'UTF-8'

@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
     }
 }
 
@@ -38,7 +38,7 @@ apply from: 'bintray.gradle'
 apply plugin: 'com.github.ben-manes.versions'
 
 group 'io.github.novacrypto'
-version '0.1.3'
+version '2018.10.06'
 
 // To upload a new version
 // ./gradlew clean build bintrayUpload -Puser=user -Pkey=APIKEY
@@ -69,22 +69,10 @@ compileJava {
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    testCompile 'com.google.code.gson:gson:2.8.2'
-    testCompile 'org.assertj:assertj-core:3.9.1'
+    testCompile 'com.google.code.gson:gson:2.8.5'
+    testCompile 'org.assertj:assertj-core:3.11.1'
 }
 
-dependencyUpdates {
-    outputFormatter = { final result ->
-        if (!result.outdated.dependencies.isEmpty()) {
-            throw new GradleException('Abort, there are dependencies to update.')
-        }
-    }
-}
-
-bintrayUpload.dependsOn(dependencyUpdates)
-
-task('installSharedIdea', type: Copy) {
-    description = "Copy the shared intellij files into local .idea/"
-    from 'ideaShared/'
-    into '.idea/'
-}
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'

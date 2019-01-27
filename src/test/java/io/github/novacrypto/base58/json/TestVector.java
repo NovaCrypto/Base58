@@ -21,7 +21,13 @@
 
 package io.github.novacrypto.base58.json;
 
+import com.google.gson.annotations.SerializedName;
+
 public final class TestVector {
+
+    @SerializedName("dataHex")
     public String dataHex;
+
+    @SerializedName("dataBase58")
     public String dataBase58;
 }

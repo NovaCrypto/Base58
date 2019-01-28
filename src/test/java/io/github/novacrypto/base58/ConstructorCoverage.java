@@ -1,6 +1,6 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2019 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,17 +23,20 @@ package io.github.novacrypto.base58;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+
 public final class ConstructorCoverage {
 
     @Test
     public void base58_constructor_for_coverage_only() {
-        new Base58();
+        //noinspection ObviousNullCheck
+        assertNotNull(new Base58());
     }
-
 
     @Test
     public void capacityCalculator_constructor_for_coverage_only() {
-        new CapacityCalculator();
+        //noinspection ObviousNullCheck
+        assertNotNull(new CapacityCalculator());
     }
 
 }

@@ -1,32 +1,21 @@
-[![Download](https://api.bintray.com/packages/novacrypto/BIP/Base58/images/download.svg)](https://bintray.com/novacrypto/BIP/Base58/_latestVersion) [![Build Status](https://travis-ci.org/NovaCrypto/Base58.svg?branch=master)](https://travis-ci.org/NovaCrypto/Base58) [![codecov](https://codecov.io/gh/NovaCrypto/Base58/branch/master/graph/badge.svg)](https://codecov.io/gh/NovaCrypto/Base58)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.novacrypto/Base58)](https://search.maven.org/artifact/io.github.novacrypto/Base58/)
 
 # Install
 
-Use either of these repositories:
+Using:
 
-```
+```groovy
 repositories {
-    jcenter()
-}
-```
-
-Or:
-
-```
-repositories {
-    maven {
-        url 'https://dl.bintray.com/novacrypto/BIP/'
-    }
+    mavenCentral()
 }
 ```
 
 Add dependency:
 
-```
+```groovy
 dependencies {
-    compile 'io.github.novacrypto:Base58:2019.01.27@jar'
+    implementation 'io.github.novacrypto:Base58:2022.01.17@jar'
 }
-
 ```
 
 # Usage
@@ -35,13 +24,13 @@ From simplest to most advanced:
 
 ## Encode (static method)
 
-```
+```java
 String base58 = Base58.base58Encode(bytes);
 ```
 
 ## Decode (static method)
 
-```
+```java
 byte[] bytes = Base58.base58Decode(base58String);
 ```
 
@@ -49,13 +38,13 @@ The static methods are threadsafe as they have a shared buffer per thread. They 
 
 ## Encode (instance method)
 
-```
+```java
 String base58 = Base58.newInstance().encode(bytes);
 ```
 
 ## Decode (instance method)
 
-```
+```java
 byte[] bytes = Base58.newInstance().decode(base58CharSequence);
 ```
 
@@ -65,7 +54,7 @@ The instances are not threadsafe, never share an instance across threads.
 
 Either:
 
-```
+```java
 final StringBuilder sb = new StringBuilder();
 Base58.newSecureInstance().encode(bytes, sb::append);
 return sb.toString();
@@ -73,15 +62,15 @@ return sb.toString();
 
 Or let it get told the correct initial maximum size:
 
-```
+```java
 final StringBuilder sb = new StringBuilder();
 Base58.newSecureInstance().encode(bytes, sb::ensureCapacity, sb::append);
 return sb.toString();
 ```
 
-Or supply a implementation of `EncodeTargetFromCapacity`:
+Or supply an implementation of `EncodeTargetFromCapacity`:
 
-```
+```java
 final StringBuilder sb = new StringBuilder();
 Base58.newSecureInstance().encode(bytes, (charLength) -> {
     // gives you a chance to allocate memory before passing the buffer as an EncodeTarget
@@ -93,7 +82,7 @@ return sb.toString();
 
 ## Decode (to a target, instance method)
 
-```
+```java
 static class ByteArrayTarget implements DecodeTarget {
     private int idx = 0;
     byte[] bytes;
@@ -118,3 +107,7 @@ These advanced usages avoid allocating memory and allow [SecureByteBuffer](https
 
 - Update dependencies
 - Add `EncodeTargetFromCapacity` and `EncodeTargetCapacity` interfaces and related `SecureEncoder#encode` method overloads
+
+## 2022.01.17
+
+- uses static `SecureRandom` on the advice of Spotbugs, and while it was a false positive intended for `Random` use warning, it's not a bad thing to do anyway.

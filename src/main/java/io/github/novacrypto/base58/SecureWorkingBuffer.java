@@ -1,6 +1,7 @@
 /*
  *  Base58 library, a Java implementation of Base58 encode/decode
- *  Copyright (C) 2017-2019 Alan Evans, NovaCrypto
+ *
+ *  Copyright (C) 2017-2022 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,11 +27,13 @@ import java.security.SecureRandom;
 
 final class SecureWorkingBuffer implements WorkingBuffer {
 
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+
     private ByteBuffer bytes;
     private final byte[] key = new byte[1021];
 
     SecureWorkingBuffer() {
-        new SecureRandom().nextBytes(key);
+        SECURE_RANDOM.nextBytes(key);
     }
 
     @Override
